@@ -154,7 +154,7 @@ public class LoginController : ControllerBase
             Credentials = new NetworkCredential()
             {
                 UserName = "sparklenest2001@outlook.com",
-                Password = "Sparklenest2001"
+                Password = "Sparklenest1808"
             }
         };
 
