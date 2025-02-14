@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -63,20 +64,20 @@ public class LoginController : ControllerBase
         return true;
     }
 
+    [AllowAnonymous]
     [HttpPost("SignUp/{Username}/{Email}/{Password}/{ConfirmPassword}")]
 
     public async Task<ActionResult> SignUp(string Username, string Email, string Password, string ConfirmPassword)
     {
         try
         {
-
             if (string.IsNullOrWhiteSpace(Username) && Username.Length > 20)
                 return BadRequest("Pick different Username!");
 
             if (string.IsNullOrWhiteSpace(Email))
                 return BadRequest("Enter Email!");
 
-            if (string.IsNullOrWhiteSpace(Password) && !Password.Any(char.IsUpper) && !Password.Any(ch => !char.IsLetterOrDigit(ch)) && Password.Length < 10)
+            if (string.IsNullOrWhiteSpace(Password) && !Password.Any(char.IsUpper) && Password.Length < 10)
                 return BadRequest("Enter new password!");
 
             if (Password != ConfirmPassword)
@@ -90,6 +91,7 @@ public class LoginController : ControllerBase
                 if (u.Email.CompareTo(Email) == 0)
                     return BadRequest("Already existing!");
             }
+
 
             User user = new User
             {
