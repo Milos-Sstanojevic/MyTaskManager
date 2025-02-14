@@ -7,3 +7,5 @@
 // {
     
 // }
+
+//create and organize tasks, da oznaci zavrsen task, collaborate with team members, track progrss, customize workflow, 

@@ -153,12 +153,12 @@ public class LoginController : ControllerBase
             UseDefaultCredentials = false,
             Credentials = new NetworkCredential()
             {
-                UserName = "gameHeaven2024@outlook.com",
-                Password = "tester123"
+                UserName = "sparklenest2001@outlook.com",
+                Password = "Sparklenest2001"
             }
         };
 
-        MailAddress fromMail = new MailAddress("gameHeaven2024@outlook.com", "Sparkle Nest");
+        MailAddress fromMail = new MailAddress("sparklenest2001@outlook.com", "Sparkle Nest");
         MailAddress toMail = new MailAddress(user.Email, user.UserName);
         MailMessage mesg = new MailMessage()
         {
