@@ -1,13 +1,14 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddCors(p =>
 {
     p.AddPolicy("CORS", builder =>
@@ -25,11 +26,10 @@ builder.Services.AddDbContext<Context>(options =>
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Task Manager", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Game Heaven", Version = "v1" });
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
     c.AddSecurityRequirement(new OpenApiSecurityRequirement{
         {
@@ -53,7 +53,6 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer"
     });
 });
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -68,19 +67,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-
-
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Game Heaven"));
 }
+
 
 app.UseHttpsRedirection();
 
 app.UseCors("CORS");
+
+
+app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapControllers();
+
 app.Run();
