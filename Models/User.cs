@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models;
 
@@ -10,6 +11,8 @@ public class User
     public string Email { get; set; } = null!;
     public byte[] Password { get; set; } = null!;
     public byte[] Salt { get; set; } = null!;
+
+    [JsonIgnore]
     public List<ToDoTask>? TasksOfUser { get; set; }
     public List<Members>? UserMemeberOfTasks { get; set; }
 }

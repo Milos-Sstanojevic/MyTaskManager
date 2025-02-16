@@ -10,8 +10,8 @@ public class ToDoTask
     public string? TaskName { get; set; }
     public string? Description { get; set; }
     public StateOfTask StateOfTask { get; set; } = StateOfTask.Default;
-    public User OwnerOfTask { get; set; } = null!;
-    public List<Members> MembersOfTask { get; set; } = null!;
+    public User? OwnerOfTask { get; set; }
+    public List<Members>? MembersOfTask { get; set; }
 }
 
 public enum StateOfTask

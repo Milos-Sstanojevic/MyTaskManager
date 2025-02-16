@@ -57,7 +57,7 @@ public class LoginController : ControllerBase
 
         using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
         {
-            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             for (int i = 0; i < computedHash.Length; i++)
                 if (computedHash[i] != storedHash[i]) return false;
         }
@@ -72,13 +72,13 @@ public class LoginController : ControllerBase
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(Username) && Username.Length > 20)
+            if (string.IsNullOrWhiteSpace(Username) || Username.Length > 20)
                 return BadRequest("Pick different Username!");
 
             if (string.IsNullOrWhiteSpace(Email))
                 return BadRequest("Enter Email!");
 
-            if (string.IsNullOrWhiteSpace(Password) && !Password.Any(char.IsUpper) && Password.Length < 10)
+            if (string.IsNullOrWhiteSpace(Password) || !Password.Any(char.IsUpper) || Password.Length < 10)
                 return BadRequest("Enter new password!");
 
             if (Password != ConfirmPassword)
@@ -138,42 +138,45 @@ public class LoginController : ControllerBase
         using (var hmac = new System.Security.Cryptography.HMACSHA512())
         {
             passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
     }
 
     private static async void Verification(User user)
     {
-        try {
-        string message;
-        message = $"{user.UserName} \n Welcome in Sparkle Nest.\n\n With respect, \n Sparkle Nest";
-
-        SmtpClient Client = new SmtpClient()
+        try
         {
-            Host = "smtp.outlook.com",
-            Port = 587,
-            EnableSsl = true,
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential()
+            string message;
+            message = $"{user.UserName} \n Welcome in Sparkle Nest.\n\n With respect, \n Sparkle Nest";
+
+            SmtpClient Client = new SmtpClient()
             {
-                UserName = "sparklenest2001@outlook.com",
-                Password = "Sparklenest1808"
-            }
-        };
+                Host = "smtp.outlook.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential()
+                {
+                    UserName = "sparklenest2001@outlook.com",
+                    Password = "Sparklenest1808"
+                }
+            };
 
-        MailAddress fromMail = new MailAddress("sparklenest2001@outlook.com", "Sparkle Nest");
-        MailAddress toMail = new MailAddress(user.Email, user.UserName);
-        MailMessage mesg = new MailMessage()
-        {
-            From = fromMail,
-            Subject = "Welcoming mail",
-            Body = message
-        };
+            MailAddress fromMail = new MailAddress("sparklenest2001@outlook.com", "Sparkle Nest");
+            MailAddress toMail = new MailAddress(user.Email, user.UserName);
+            MailMessage mesg = new MailMessage()
+            {
+                From = fromMail,
+                Subject = "Welcoming mail",
+                Body = message
+            };
 
-        mesg.To.Add(toMail);
-        await Client.SendMailAsync(mesg);
-    }catch(Exception e) {return ;}} 
+            mesg.To.Add(toMail);
+            await Client.SendMailAsync(mesg);
+        }
+        catch (Exception e) { return; }
+    }
 
     [HttpPost("GetToken")]
     public async Task<ActionResult> GetToken([FromBody] UserAuth user)
@@ -215,7 +218,7 @@ public class LoginController : ControllerBase
         var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddHours(5),
+                expires: DateTime.Now.AddHours(2),
                 signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
