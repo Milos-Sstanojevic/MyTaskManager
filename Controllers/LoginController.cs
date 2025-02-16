@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -143,6 +144,7 @@ public class LoginController : ControllerBase
 
     private static async void Verification(User user)
     {
+        try {
         string message;
         message = $"{user.UserName} \n Welcome in Sparkle Nest.\n\n With respect, \n Sparkle Nest";
 
@@ -171,7 +173,7 @@ public class LoginController : ControllerBase
 
         mesg.To.Add(toMail);
         await Client.SendMailAsync(mesg);
-    }
+    }catch(Exception e) {return ;}} 
 
     [HttpPost("GetToken")]
     public async Task<ActionResult> GetToken([FromBody] UserAuth user)
