@@ -1,0 +1,67 @@
+# Build and publish outputs
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+Generated\*
+
+# Logs
+*.log
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Rider
+.idea/
+
+# DotNet artifacts
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Packages
+*.nupkg
+*.snupkg
+packages/
+
+# MacOS files
+.DS_Store
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Backup files
+*.bak
+*.old
+*.orig
+
+# Others
+*.pidb
+*.ilk
+*.meta
+*.obj
+*.pdb
+*.svclog
+*.swp
+*.tmp
+*.userprefs
+*.tlog
+
+# ASP.NET-specific files
+*.db
+*.sql
+*.sqlite
+wwwroot/
+node_modules/
+
+# Resharper
+_ReSharper*/

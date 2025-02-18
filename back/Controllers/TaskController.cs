@@ -103,7 +103,6 @@ public class TaskController : ControllerBase
         }
     }
 
-    // TESTIRAJ OPET OVU FUNKCIJU KAD NAPRAVIS VISE KORISNIKA
     [HttpDelete("DeleteTaskByName/{TaskName}")]
     public async Task<ActionResult> DeleteTaskByName(string TaskName)
     {
@@ -114,35 +113,25 @@ public class TaskController : ControllerBase
             if (user == null)
                 return BadRequest("User has to be logged in for this operation!");
 
-            var task = await Context.ToDoTasks.Where(t => t.TaskName.Equals(TaskName)).Include(t => t.OwnerOfTask).FirstOrDefaultAsync();
+            var task = await Context.ToDoTasks
+                .Where(t => t.TaskName.Equals(TaskName))
+                .Include(t => t.OwnerOfTask)
+                .Include(t => t.MembersOfTask) // Ensure members are loaded
+                .FirstOrDefaultAsync();
 
             if (task == null)
-                return NotFound("Task with given name is not found");
+                return NotFound("Task with the given name was not found!");
 
-            if (task.OwnerOfTask != user)
-                return BadRequest("You are not owner of this task. How did you get it?");
+            if (task.OwnerOfTask.ID != user.ID)
+                return BadRequest("You are not the owner of this task.");
 
-            var userMember = new User();
+            if (task.MembersOfTask != null && task.MembersOfTask.Count > 0)
+                Context.Members.RemoveRange(task.MembersOfTask);
 
-            if (task.MembersOfTask != null && task.MembersOfTask.Count() > 0)
-            {
-                foreach (Members member in task.MembersOfTask)
-                {
-                    userMember = await Context.Users.Where(u => u.ID == member.Member.ID).FirstOrDefaultAsync();
-
-                    if (userMember != null && userMember.UserMemeberOfTasks != null && userMember.UserMemeberOfTasks.Contains(member))
-                        userMember.UserMemeberOfTasks.Remove(member);
-
-                    Context.Members.Remove(member);
-
-                    if (userMember != null)
-                        Context.Update(userMember);
-                }
-            }
+            user.TasksOfUser?.Remove(task);
+            Context.Update(user);
 
             Context.ToDoTasks.Remove(task);
-            user.TasksOfUser!.Remove(task);
-            Context.Update(user);
 
             await Context.SaveChangesAsync();
 
@@ -153,6 +142,7 @@ public class TaskController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
 
     [HttpPut("UpdateTaskInfo")]
     public async Task<ActionResult> UpdateTaskInfo([FromBody] ToDoTask updatedTask)
@@ -168,6 +158,9 @@ public class TaskController : ControllerBase
 
             if (task == null)
                 return NotFound("Task not found!");
+
+            if (user != task.OwnerOfTask)
+                return BadRequest("You are not owner of task so you can't change anything!");
 
             task.TaskName = updatedTask.TaskName;
             task.Description = updatedTask.Description;
@@ -262,7 +255,7 @@ public class TaskController : ControllerBase
         {
             var user = CheckIfUserIsLoggedIn();
             if (user == null)
-            return BadRequest("User must be logged in!");
+                return BadRequest("User must be logged in!");
 
             List<ToDoTask> tasksOfUser = await Context.ToDoTasks.Where(t => t.OwnerOfTask == user && t.StateOfTask == StateOfTask.Important).ToListAsync();
             if (tasksOfUser == null || tasksOfUser.Count == 0)
@@ -281,12 +274,12 @@ public class TaskController : ControllerBase
         try
         {
             var user = CheckIfUserIsLoggedIn();
-            if (user == null )
-            return BadRequest("User must be logged in!");
+            if (user == null)
+                return BadRequest("User must be logged in!");
 
             List<ToDoTask> tasksOfUser = await Context.ToDoTasks.Where(t => t.OwnerOfTask == user && t.StateOfTask == StateOfTask.NextDay).ToListAsync();
-             if (tasksOfUser == null || tasksOfUser.Count == 0)
-            return Ok("No tasks for next days!");
+            if (tasksOfUser == null || tasksOfUser.Count == 0)
+                return Ok("No tasks for next days!");
             return Ok(tasksOfUser);
         }
         catch (Exception ex)
@@ -301,13 +294,13 @@ public class TaskController : ControllerBase
         try
         {
             var user = CheckIfUserIsLoggedIn();
-            
+
             if (user == null)
-            return BadRequest("User has to be logged in!");
+                return BadRequest("User has to be logged in!");
 
             List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Done).Include(t => t.Task).Select(t => t.Task).ToListAsync();
 
-              if (tasks == null)
+            if (tasks == null)
                 return BadRequest("Error with getting finished tasks!");
 
             if (tasks.Count == 0)
@@ -346,62 +339,62 @@ public class TaskController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-[HttpGet("GetAllUrgentTasksUserIsMemberOf")]
+    [HttpGet("GetAllUrgentTasksUserIsMemberOf")]
 
-public async Task<ActionResult> GetAllUrgentTasksUserIsMemberOf()
-{
-    try
+    public async Task<ActionResult> GetAllUrgentTasksUserIsMemberOf()
     {
-        var user = CheckIfUserIsLoggedIn();
+        try
+        {
+            var user = CheckIfUserIsLoggedIn();
 
-        if (user == null)
-           return BadRequest("User has to be logged in!");
+            if (user == null)
+                return BadRequest("User has to be logged in!");
 
-        List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Urgent).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Urgent).Include(t => t.Task).Select(t => t.Task).ToListAsync();
 
-        if (tasks == null)
-        return BadRequest("Error with getting urgent tasks!");
+            if (tasks == null)
+                return BadRequest("Error with getting urgent tasks!");
 
-        if (tasks.Count == 0)
-        return Ok("List of urgent tasks!");
+            if (tasks.Count == 0)
+                return Ok("List of urgent tasks!");
 
-        return Ok(tasks);
-    }
-    catch (Exception ex)
+            return Ok(tasks);
+        }
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
-}
+    }
 
-[HttpGet("GetAllNextDayTasksUserIsMemberOf")]
+    [HttpGet("GetAllNextDayTasksUserIsMemberOf")]
 
-public async Task<ActionResult> GetAllNextDayTasksUserIsMemberOf()
-{
-    try
+    public async Task<ActionResult> GetAllNextDayTasksUserIsMemberOf()
     {
-        var user = CheckIfUserIsLoggedIn();
+        try
+        {
+            var user = CheckIfUserIsLoggedIn();
 
-        if (user == null)
-        return BadRequest("User has to be logged in!");
+            if (user == null)
+                return BadRequest("User has to be logged in!");
 
-        List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.NextDay).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.NextDay).Include(t => t.Task).Select(t => t.Task).ToListAsync();
 
-        if (tasks == null)
+            if (tasks == null)
                 return BadRequest("Error with getting tasks for next day");
 
-        if (tasks.Count == 0)
+            if (tasks.Count == 0)
                 return Ok("No tasks for next day");
-    
-                 return Ok(tasks);
 
-    }
-    catch (Exception ex)
+            return Ok(tasks);
+
+        }
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
-}
+    }
 
-[HttpGet("GetAllImportantTasksUserIsMemberOf")]
+    [HttpGet("GetAllImportantTasksUserIsMemberOf")]
     public async Task<ActionResult> GetAllImportantTasksUserIsMemeberOf()
     {
         try
@@ -501,6 +494,9 @@ public async Task<ActionResult> GetAllNextDayTasksUserIsMemberOf()
             if (task == null)
                 return BadRequest("No task with the provided name was found!");
 
+            if (loggedInUser != task.OwnerOfTask)
+                return BadRequest("You are not owner of task so you can't change anything!");
+
             if (Emails == null || Emails.Count == 0)
                 return Ok("No members added to the task.");
 
@@ -585,6 +581,9 @@ public async Task<ActionResult> GetAllNextDayTasksUserIsMemberOf()
 
             if (task == null)
                 return NotFound("No task with given name exist!");
+
+            if (user != task.OwnerOfTask)
+                return BadRequest("You are not owner of task so you can't change anything!");
 
             task.StateOfTask = StateOfTask.Done;
 
