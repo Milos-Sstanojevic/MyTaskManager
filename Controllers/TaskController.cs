@@ -239,7 +239,15 @@ public class TaskController : ControllerBase
     {
         try
         {
-            return Ok();
+            var user = CheckIfUserIsLoggedIn();
+            if (user == null)
+                return BadRequest("User must be logged in!");
+
+            List<ToDoTask> tasksOfUser = await Context.ToDoTasks.Where(t => t.OwnerOfTask == user && t.StateOfTask == StateOfTask.Urgent).ToListAsync();
+
+            if (tasksOfUser == null || tasksOfUser.Count == 0)
+                return Ok("No urgent tasks of user!");
+            return Ok(tasksOfUser);
         }
         catch (Exception ex)
         {
@@ -252,7 +260,14 @@ public class TaskController : ControllerBase
     {
         try
         {
-            return Ok();
+            var user = CheckIfUserIsLoggedIn();
+            if (user == null)
+            return BadRequest("User must be logged in!");
+
+            List<ToDoTask> tasksOfUser = await Context.ToDoTasks.Where(t => t.OwnerOfTask == user && t.StateOfTask == StateOfTask.Important).ToListAsync();
+            if (tasksOfUser == null || tasksOfUser.Count == 0)
+                return Ok("No important tasks for user!");
+            return Ok(tasksOfUser);
         }
         catch (Exception ex)
         {
@@ -265,7 +280,14 @@ public class TaskController : ControllerBase
     {
         try
         {
-            return Ok();
+            var user = CheckIfUserIsLoggedIn();
+            if (user == null )
+            return BadRequest("User must be logged in!");
+
+            List<ToDoTask> tasksOfUser = await Context.ToDoTasks.Where(t => t.OwnerOfTask == user && t.StateOfTask == StateOfTask.NextDay).ToListAsync();
+             if (tasksOfUser == null || tasksOfUser.Count == 0)
+            return Ok("No tasks for next days!");
+            return Ok(tasksOfUser);
         }
         catch (Exception ex)
         {
@@ -278,7 +300,20 @@ public class TaskController : ControllerBase
     {
         try
         {
-            return Ok();
+            var user = CheckIfUserIsLoggedIn();
+            
+            if (user == null)
+            return BadRequest("User has to be logged in!");
+
+            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Done).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+
+              if (tasks == null)
+                return BadRequest("Error with getting finished tasks!");
+
+            if (tasks.Count == 0)
+                return Ok("User is not memeber of any tasks!");
+
+            return Ok(tasks);
         }
         catch (Exception ex)
         {
@@ -311,11 +346,113 @@ public class TaskController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+[HttpGet("GetAllUrgentTasksUserIsMemberOf")]
 
-    //Da ti vrati sve taskove kojih je korisnik memeber ali samo one koji su Urgent
-    //Da ti vrati sve taskove kojih je korisnik memeber ali samo one koji su NextDay
-    //Da ti vrati sve taskove kojih je korisnik memeber ali samo one koji su Important
-    //Da ti vrati sve taskove kojih je korisnik memeber ali samo one koji su Done
+public async Task<ActionResult> GetAllUrgentTasksUserIsMemberOf()
+{
+    try
+    {
+        var user = CheckIfUserIsLoggedIn();
+
+        if (user == null)
+           return BadRequest("User has to be logged in!");
+
+        List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Urgent).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+
+        if (tasks == null)
+        return BadRequest("Error with getting urgent tasks!");
+
+        if (tasks.Count == 0)
+        return Ok("List of urgent tasks!");
+
+        return Ok(tasks);
+    }
+    catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+}
+
+[HttpGet("GetAllNextDayTasksUserIsMemberOf")]
+
+public async Task<ActionResult> GetAllNextDayTasksUserIsMemberOf()
+{
+    try
+    {
+        var user = CheckIfUserIsLoggedIn();
+
+        if (user == null)
+        return BadRequest("User has to be logged in!");
+
+        List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.NextDay).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+
+        if (tasks == null)
+                return BadRequest("Error with getting tasks for next day");
+
+        if (tasks.Count == 0)
+                return Ok("No tasks for next day");
+    
+                 return Ok(tasks);
+
+    }
+    catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+}
+
+[HttpGet("GetAllImportantTasksUserIsMemberOf")]
+    public async Task<ActionResult> GetAllImportantTasksUserIsMemeberOf()
+    {
+        try
+        {
+            var user = CheckIfUserIsLoggedIn();
+
+            if (user == null)
+                return BadRequest("User has to be logged in!");
+
+            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Important).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+
+            if (tasks == null)
+                return BadRequest("Error with getting important tasks user is member of!");
+
+            if (tasks.Count == 0)
+                return Ok("No important tasks!");
+
+            return Ok(tasks);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("GetAllDoneTasksUserIsMemberOf")]
+    public async Task<ActionResult> GetAllDoneTasksUserIsMemeberOf()
+    {
+        try
+        {
+            var user = CheckIfUserIsLoggedIn();
+
+            if (user == null)
+                return BadRequest("User has to be logged in!");
+
+            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user && u.Task.StateOfTask == StateOfTask.Done).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+
+            if (tasks == null)
+                return BadRequest("Error with getting finished tasks!");
+
+            if (tasks.Count == 0)
+                return Ok("No finished tasks");
+
+            return Ok(tasks);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 
     [HttpGet("GetAllTasksUserIsMemberOf")]
     public async Task<ActionResult> GetAllTasksUserIsMemeberOf()
