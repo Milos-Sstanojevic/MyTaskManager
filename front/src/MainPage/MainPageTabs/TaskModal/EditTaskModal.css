@@ -1,0 +1,84 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.task-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.task-owner,
+.task-state {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.task-description {
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.task-calendar p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.add-member-section {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.email-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-btn,
+.edit-task-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover,
+.edit-task-btn:hover {
+    background: #0056b3;
+}
+
+.start-date {
+    background: lightgreen !important;
+    border-radius: 50%;
+}
+
+.end-date {
+    background: lightcoral !important;
+    border-radius: 50%;
+}

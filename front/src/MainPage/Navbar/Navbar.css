@@ -1,5 +1,3 @@
-/* Navbar.css */
-
 .nav {
   background-color: #1d1e21;
   color: #fff;
@@ -21,7 +19,7 @@
 }
 
 .games-link {
-  margin-left: auto;  /* Align to the right by pushing it to the end */
+  margin-left: auto; 
 }
 
 ul {

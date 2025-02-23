@@ -25,6 +25,14 @@ public class TaskController : ControllerBase
         {
             var user = CheckIfUserIsLoggedIn();
 
+            if (user == null)
+                return BadRequest("No user is logged in!");
+
+            var tasks = await Context.ToDoTasks.Where(t => t.TaskName.Equals(task.TaskName) && t.OwnerOfTask.UserName.Equals(user.UserName)).FirstOrDefaultAsync();
+
+            if (tasks != null)
+                return BadRequest("Task with that name already exist for this user");
+
             ToDoTask toDoTask = new ToDoTask()
             {
                 DateTaskStarted = DateTime.Now,
@@ -103,6 +111,39 @@ public class TaskController : ControllerBase
         }
     }
 
+    [HttpGet("GetAllMembersOfTask/{TaskName}")]
+    public async Task<ActionResult> GetAllMembersOfTask(string TaskName)
+    {
+        try
+        {
+            var user = CheckIfUserIsLoggedIn();
+
+            if (user == null)
+                return BadRequest("User has to be logged in!");
+
+            if (string.IsNullOrEmpty(TaskName))
+                return BadRequest("You have to provide name of task!");
+
+            var task = await Context.ToDoTasks.Where(t => t.TaskName.Equals(TaskName)).FirstOrDefaultAsync();
+
+            if (task == null)
+                return NotFound("No task with that name was found!");
+
+            var members = await Context.Members.Where(t => t.Task == task).Include(t => t.Member).ToListAsync();
+
+            if (members == null)
+                return BadRequest("Error with geting members of this task");
+            if (members.Count == 0)
+                return NotFound("There are no members on this task!");
+
+            return Ok(members);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpDelete("DeleteTaskByName/{TaskName}")]
     public async Task<ActionResult> DeleteTaskByName(string TaskName)
     {
@@ -144,8 +185,8 @@ public class TaskController : ControllerBase
     }
 
 
-    [HttpPut("UpdateTaskInfo")]
-    public async Task<ActionResult> UpdateTaskInfo([FromBody] ToDoTask updatedTask)
+    [HttpPut("UpdateTaskInfo/{TaskName}")]
+    public async Task<ActionResult> UpdateTaskInfo(string TaskName, [FromBody] ToDoTask updatedTask)
     {
         try
         {
@@ -154,10 +195,19 @@ public class TaskController : ControllerBase
             if (user == null)
                 return BadRequest("User has to be logged in!");
 
-            var task = await Context.ToDoTasks.Where(t => t.TaskName.Equals(updatedTask.TaskName)).Include(t => t.OwnerOfTask).FirstOrDefaultAsync();
+            var task = await Context.ToDoTasks.Where(t => t.TaskName.Equals(TaskName)).Include(t => t.OwnerOfTask).FirstOrDefaultAsync();
 
             if (task == null)
                 return NotFound("Task not found!");
+
+            if (TaskName != updatedTask.TaskName)
+            {
+                var checkExistingNames = await Context.ToDoTasks.Where(t => t.TaskName.Equals(updatedTask.TaskName) && t.OwnerOfTask.UserName.Equals(user.UserName)).FirstOrDefaultAsync();
+
+                //proveri dal radi ovo
+                if (checkExistingNames != null)
+                    return BadRequest("Think of a new name for task you already have one with this!");
+            }
 
             if (user != task.OwnerOfTask)
                 return BadRequest("You are not owner of task so you can't change anything!");
@@ -457,13 +507,13 @@ public class TaskController : ControllerBase
             if (user == null)
                 return BadRequest("User has to be logged in!");
 
-            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user).Include(t => t.Task).Select(t => t.Task).ToListAsync();
+            List<ToDoTask> tasks = await Context.Members.Where(u => u.Member == user).Include(t => t.Task).ThenInclude(u => u.OwnerOfTask).Select(t => t.Task).ToListAsync();
 
             if (tasks == null)
                 return BadRequest("Error with getting tasks user is member of!");
 
             if (tasks.Count == 0)
-                return Ok("User is not memeber of any tasks!");
+                return BadRequest("User is not memeber of any tasks!");
 
             return Ok(tasks);
         }
@@ -498,7 +548,7 @@ public class TaskController : ControllerBase
                 return BadRequest("You are not owner of task so you can't change anything!");
 
             if (Emails == null || Emails.Count == 0)
-                return Ok("No members added to the task.");
+                return BadRequest("No members added to the task.");
 
             List<string> errors = new();
             List<string> addedUsers = new();
@@ -557,6 +607,51 @@ public class TaskController : ControllerBase
             };
 
             return Ok(response);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPut("RemoveMemberFromTask/{Email}/{TaskName}")]
+    public async Task<ActionResult> RemoveMemberFromTask(string Email, string TaskName)
+    {
+        try
+        {
+            var user = CheckIfUserIsLoggedIn();
+
+            if (user == null)
+                return BadRequest("User has to be logged in!");
+
+            if (string.IsNullOrEmpty(Email))
+                return BadRequest("You have to select email!");
+
+            if (string.IsNullOrEmpty(TaskName))
+                return BadRequest("You have to provide name of task");
+
+            var userToRemove = await Context.Users.Where(u => u.Email.Equals(Email)).Include(u => u.UserMemeberOfTasks).FirstOrDefaultAsync();
+
+            if (userToRemove == null)
+                return BadRequest("No user with provided email found");
+
+            var task = await Context.ToDoTasks.Where(t => t.TaskName.Equals(TaskName)).Include(t => t.MembersOfTask).FirstOrDefaultAsync();
+
+            if (task == null)
+                return BadRequest("Task with provided name not found");
+
+            var membersClass = await Context.Members.Where(u => u.Member == userToRemove && u.Task == task).FirstOrDefaultAsync();
+
+            if (membersClass == null)
+                return BadRequest("That member is not a member of this task");
+
+            userToRemove.UserMemeberOfTasks.Remove(membersClass);
+            task.MembersOfTask.Remove(membersClass);
+
+            Context.Members.Remove(membersClass);
+            await Context.SaveChangesAsync();
+
+            return Ok("Successfully removed member from this task");
         }
         catch (Exception e)
         {

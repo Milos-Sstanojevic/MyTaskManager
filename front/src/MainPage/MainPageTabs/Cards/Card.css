@@ -1,0 +1,71 @@
+.task-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 8, 8, 0.661);
+    margin: 10px;
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+    background: white;
+}
+
+.task-card:hover {
+    box-shadow: 0 8px 16px #08ff4e83;
+    cursor: pointer;
+}
+
+.task-card:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.task-actions {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    z-index: 2;
+}
+
+.task-actions button {
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn {
+    background: rgba(255, 0, 0, 0.8);
+}
+
+.delete-btn:hover {
+    background: rgba(255, 0, 0, 1);
+}
+
+.complete-btn {
+    background: rgba(0, 128, 0, 0.8);
+}
+
+.complete-btn:hover {
+    background: rgba(0, 128, 0, 1);
+}

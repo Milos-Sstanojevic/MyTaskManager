@@ -14,5 +14,6 @@ public class User
 
     [JsonIgnore]
     public List<ToDoTask>? TasksOfUser { get; set; }
+    [JsonIgnore]
     public List<Members>? UserMemeberOfTasks { get; set; }
 }

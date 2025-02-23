@@ -25,6 +25,42 @@ public class LoginController : ControllerBase
         configuration = config;
     }
 
+    [HttpGet("GetCurrentUserData")]
+    public async Task<ActionResult> GetCurrentUserData()
+    {
+        try
+        {
+            if (User == null)
+            {
+                return BadRequest("User is null");
+            }
+            if (!User.Identity!.IsAuthenticated)
+            {
+                return BadRequest("No logged-in user. Please log in.");
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity == null)
+            {
+                return BadRequest("Error with getting the current user");
+            }
+            var userClaims = identity.Claims;
+            int id = int.Parse(userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Sid)!.Value);
+
+            var user = await Context.Users.Where(p => p.ID == id).Include(p => p.TasksOfUser).FirstOrDefaultAsync();
+
+            if (user == null)
+                return BadRequest("Error with getting data about current user");
+
+            return Ok(user);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
     [HttpGet("LoginUser/{Email}/{Password}")]
     public async Task<ActionResult> LoginUser(string Email, string Password)
     {

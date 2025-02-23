@@ -1,0 +1,98 @@
+/* Modal Overlay - Dimmed background */
+.add-task-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content - White background */
+.add-task-modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.add-task-modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Input & textarea styling */
+.add-task-modal-content input,
+.add-task-modal-content textarea,
+.add-task-modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+/* Small grey placeholder text */
+.add-task-modal-content input::placeholder,
+.add-task-modal-content textarea::placeholder {
+    color: #bbb;
+    font-style: italic;
+}
+
+/* Task State Select Box */
+.add-task-modal-content select {
+    height: 40px;
+    cursor: pointer;
+}
+
+/* Calendar Styling */
+.add-task-modal-content .react-calendar {
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+/* Button */
+.add-task-modal-content .save-task-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.add-task-modal-content .save-task-btn:hover {
+    background-color: #45a049;
+}
+
+/* Label Styling */
+.add-task-modal-content label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+}
+
+/* Ensuring the modal content is properly spaced */
+.add-task-modal-content input,
+.add-task-modal-content textarea,
+.add-task-modal-content select {
+    margin-top: 5px;
+}

@@ -1,0 +1,40 @@
+.container-tabs {
+    width: 100%;
+}
+
+.bloc-tabs {
+    display: flex;
+    position: relative;
+}
+
+.tabs {
+    padding: 10px 20px;
+    border: 2px solid black;
+    cursor: pointer;
+    background: white;
+}
+
+.tabs:not(:first-child) {
+    border-left: none;
+}
+
+.active-tabs {
+    background: white;
+    border-bottom: none;
+    position: relative;
+    top: 2px;
+}
+
+.boards {
+    border: 2px solid black;
+    padding: 20px;
+    margin-top: -2px;
+}
+
+.board {
+    display: none;
+}
+
+.active-board {
+    display: flex;
+}

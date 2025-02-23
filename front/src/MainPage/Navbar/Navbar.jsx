@@ -4,10 +4,8 @@ import './Navbar.css'
 const Navbar = () => {
 
     const handleLogOut = () => {
-    // Remove token from local storage
     localStorage.removeItem('token');
-    // Refresh the window
-    window.location.reload();
+    window.location.href = "http://localhost:3000";
   };
 
     return (
