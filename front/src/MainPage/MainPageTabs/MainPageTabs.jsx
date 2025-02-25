@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MainPageTabs.css"
 import Card, { StateOfTask } from "./Cards/Card";
 import AddTaskCard from "./Cards/AddTaskCard";
+import CalendarTab from "./CalendarTab/CalendarTab";
 
 const fetchLink = "http://localhost:5164/Task/"
 
@@ -17,8 +18,6 @@ const MainPageTabs = () => {
             setLinkToFetch("GetAllTasksOfUser");
         else if (index === "MemberedTasks")
             setLinkToFetch("GetAllTasksUserIsMemberOf");
-        else if (index === "Calender")
-            setLinkToFetch("Calender");
     }
 
     useEffect(() => {
@@ -114,9 +113,7 @@ const MainPageTabs = () => {
                 </div>
 
                 <div className={toggleState === "Calender" ? "board active-board" : "board"}>
-                    <h2>Content 3</h2>
-                    <hr />
-                    <p> NEKI TAMO TEKST NA TRECOJ STRANI</p>
+                    <CalendarTab tasks={fetchedTasks} />
                 </div>
             </div>
         </div>
