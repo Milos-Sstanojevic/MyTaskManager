@@ -10,8 +10,8 @@ import RightOverlayPanel from "./LoginComponents/RightOverlayPanel";
 
 
 const HomePage = () => {
-    
-const [signIn, toggle] = useState(true);
+
+  const [signIn, toggle] = useState(true);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState();
   const [repeatPassword, setRepeatPassword] = useState(null);
@@ -21,8 +21,9 @@ const [signIn, toggle] = useState(true);
   const navigate = useNavigate();
   const [notVerified, setNotVerified] = useState(true);
   const [popup, setPopup] = useState(false);
-  const [errorForgMail,setErrorForgMail]=useState("");
-  const [forgotEmail,setForgotEmail]=useState("");
+  const [errorForgMail, setErrorForgMail] = useState("");
+  const [forgotEmail, setForgotEmail] = useState("");
+
 
   const guestOnClick = () => {
     localStorage.setItem("Guest", true);
@@ -39,8 +40,8 @@ const [signIn, toggle] = useState(true);
         </div>
       </div>
     );
-    }
-    
+  }
+
   const resetInputs = () => {
     toggle(true);
     setEmail(null);
@@ -63,10 +64,8 @@ const [signIn, toggle] = useState(true);
     const profil = { username, email, password, repeatPassword };
     setLoading(true);
     fetch(
-      `http://localhost:5164/Login/SignUp/${
-        profil.username
-      }/${encodeURIComponent(profil.email)}/${profil.password}/${
-        profil.repeatPassword
+      `http://localhost:5164/Login/SignUp/${profil.username
+      }/${encodeURIComponent(profil.email)}/${profil.password}/${profil.repeatPassword
       }`,
       {
         method: "POST",
@@ -151,149 +150,181 @@ const [signIn, toggle] = useState(true);
       console.log(error);
     }
   };
-  
 
 
-  const sendMail=async()=>{
+
+  const sendMail = async () => {
     await fetch(`http://localhost:5164/Login/ForgotPasswordEmail/${forgotEmail}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(res=>{
-      if(!res.ok){
-        res.text().then(text=>{
-          setErrorForgMail(text);
-        })
-      }
-      else{
-        setErrorForgMail("");
-        setPopup(false);
-      }
-    }).catch(err=>{
-      console.log(err);
-    })
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(res => {
+        if (!res.ok) {
+          res.text().then(text => {
+            setErrorForgMail(text);
+          })
+        }
+        else {
+          setErrorForgMail("");
+          setPopup(false);
+        }
+      }).catch(err => {
+        console.log(err);
+      })
   }
 
-    return (
+  return (
     <div className="div-pozadina">
       {popup === true ? (
         <div className="forgot-password">
-          <label style={{textAlign:"center"}}>Unesite vaš E-mail da biste resetovali šifru!</label>
+          <label style={{ textAlign: "center" }}>Introduceți adresa dvs. de e-mail pentru a reseta parola</label>
           <input
             className="login-input-forgot"
             type="email"
             placeholder="Email"
-            onChange={(e)=>setForgotEmail(e.target.value)}
+            onChange={(e) => setForgotEmail(e.target.value)}
           ></input>
           <label className="error-mail">{errorForgMail}</label>
           <div className="buttons-forg">
-          <button className="login-button" onClick={sendMail}>Potvrdi</button>
-          <button className="login-button" onClick={()=>setPopup(false)}>Otkaži</button>
+            <button className="login-button" onClick={sendMail}>Potvrdi</button>
+            <button className="login-button" onClick={() => setPopup(false)}>Anulează</button>
           </div>
         </div>
       ) : (
         ""
-            )}
-      <div className="container-div">
-        <SignUpContainer>
-          <form className="form-login" onSubmit={handleSignupSubmit}>
-            <h1 className="title">Kreirajte profil</h1>
-            <input
-              className="login-input"
-              type="text"
-              placeholder="Korisničko ime"
-              onChange={(e) => setUsername(e.target.value)}
-            ></input>
-            <input
-              className="login-input"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-            <input
-              className="login-input"
-              type="password"
-              placeholder="Lozinka"
-              onChange={(e) => setPassword(e.target.value)}
-            ></input>
-            <input
-              className="login-input"
-              type="password"
-              placeholder="Potvrda lozinke"
-              onChange={(e) => setRepeatPassword(e.target.value)}
-            ></input>
-            {!loading && <button className="login-button">Kreiraj</button>}
-            {loading && (
-              <button className="login-button" disabled>
-                Kreiranje...
-              </button>
-            )}
-            <div className="error">{errorMessage}</div>
-          </form>
-        </SignUpContainer>
-        <SignInContainer signingIn={signIn}>
-          <form className="form-login" onSubmit={handleLoginSubmit}>
-            <h1 className="title">Prijavite se!</h1>
-            <input
-              className="login-input"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-            <input
-              className="login-input"
-              type="password"
-              placeholder="Lozinka"
-              onChange={(e) => setPassword(e.target.value)}
-            ></input>
-            {!loading && <button className="login-button">Prijavi se</button>}
-            {loading && (
-              <button className="login-button" disabled>
-                Prijavljivanje...
-              </button>
-            )}
-            <label className="link-zaboravljena" onClick={forgotPasswordPopup}>
-              Zaoboravili ste lozinku? Kliknite ovde
-            </label>
-            <div className="error">{errorMessage}</div>
-          </form>
-        </SignInContainer>
-        <OverlayContainer signingIn={signIn}>
-          <Overlay signingIn={signIn}>
-            <LeftOverlayPanel signingIn={signIn}>
-              <h1 className="title">Dobrodošli!</h1>
-              <p className="parag-login">
-                Prijavite se na svoj profil da nastavimo igru!
-              </p>
-              <button className="ghost-button" onClick={resetInputs}>
-                Prijavi se
-              </button>
-            </LeftOverlayPanel>
-
-            <RightOverlayPanel signingIn={signIn}>
-              <h1 className="title">Zdravo!</h1>
-              <label className="parag-login">
-                Napravite profil i pokrenite zabavu!
-                <div className="mt-3 mb-3"></div>
+      )}
+      <div className="desc-login-div">
+        <div className="container-div">
+          <SignUpContainer>
+            <form className="form-login" onSubmit={handleSignupSubmit}>
+              <h1 className="title">Creați un profil</h1>
+              <input
+                className="login-input"
+                type="text"
+                placeholder="Nume de utilizator"
+                onChange={(e) => setUsername(e.target.value)}
+              ></input>
+              <input
+                className="login-input"
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+              <input
+                className="login-input"
+                type="password"
+                placeholder="Parolă"
+                onChange={(e) => setPassword(e.target.value)}
+              ></input>
+              <input
+                className="login-input"
+                type="password"
+                placeholder="Confirmarea parolei"
+                onChange={(e) => setRepeatPassword(e.target.value)}
+              ></input>
+              {!loading && <button className="login-button">Crează</button>}
+              {loading && (
+                <button className="login-button" disabled>
+                  Creare...
+                </button>
+              )}
+              <div className="error">{errorMessage}</div>
+            </form>
+          </SignUpContainer>
+          <SignInContainer signingIn={signIn}>
+            <form className="form-login" onSubmit={handleLoginSubmit}>
+              <h1 className="title">Conectați-vă!</h1>
+              <input
+                className="login-input"
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+              <input
+                className="login-input"
+                type="password"
+                placeholder="Parolă"
+                onChange={(e) => setPassword(e.target.value)}
+              ></input>
+              {!loading && <button className="login-button">Conectează-te</button>}
+              {loading && (
+                <button className="login-button" disabled>
+                  Conectare...
+                </button>
+              )}
+              <label className="link-zaboravljena" onClick={forgotPasswordPopup}>
+                Ați uitat parola? Faceți clic aici
               </label>
+              <div className="error">{errorMessage}</div>
+            </form>
+          </SignInContainer>
+          <OverlayContainer signingIn={signIn}>
+            <Overlay signingIn={signIn}>
+              <LeftOverlayPanel signingIn={signIn}>
+                <h1 className="title">Bine ați venit!</h1>
+                <p className="parag-login">
+                  Conectați-vă la profilul dvs. pentru a continua!
+                </p>
+                <button className="ghost-button" onClick={resetInputs}>
+                  Conectează-te
+                </button>
+              </LeftOverlayPanel>
 
-              <button className="ghost-button" onClick={resetInputsK}>
-                Kreiraj profil
-              </button>
+              <RightOverlayPanel signingIn={signIn}>
+                <h1 className="title">Salut!</h1>
+                <label className="parag-login">
+                  Crează un profil și notează-ți sarcinile!
+                  <div className="mt-3 mb-3"></div>
+                </label>
 
-            </RightOverlayPanel>
-          </Overlay>
-        </OverlayContainer>
-            </div>
-        <div className="desc-logo-div">
-            <div className="logo"></div>
-            <div className="site-descP">
-                <p>ALO BRE OVO JE OPIS SAJTA</p>
-            </div>
+                <button className="ghost-button" onClick={resetInputsK}>
+                  Crează profil
+                </button>
+
+              </RightOverlayPanel>
+            </Overlay>
+          </OverlayContainer>
         </div>
+          <div className="site-descP">
+            <div className="desc-box">
+              <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
+            </div>
+            <div className="desc-box">
+              <p>📅 Planificați, urmăriți 👀 și colaborați fără efort. 🤝</p>
+            </div>
+            <div className="desc-box">
+              <p>💡Transformă haosul în claritate și productivitatea într-o briză!💨🚀</p>
+            </div>
+          
+        </div>
+      </div>
+      <div className="info-section">
+        <h1>Work Smarter</h1>
+        <h2>Do more with Trello</h2>
+        <p>Customize the way you organize with easy integrations, automation, and mirroring of your to-dos across multiple locations.</p>
+
+        <div className="info-cards">
+          <div className="info-card">
+            <h3>Integrations</h3>
+            <p>Connect the apps your team already uses into your Trello workflow or add a Power-Up to fine-tune your specific needs.</p>
+            <button>Browse Integrations</button>
+          </div>
+          <div className="info-card">
+            <h3>Butler Automation</h3>
+            <p>No-code automation is built into every Trello board. Focus on the work that matters most and let the robots do the rest.</p>
+            <button>Get to know Automation</button>
+          </div>
+          <div className="info-card">
+            <h3>Card Mirroring</h3>
+            <p>View your to-dos from different boards in more than one place. Mirror a card to keep track of work wherever you need it!</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+
   );
 };
 

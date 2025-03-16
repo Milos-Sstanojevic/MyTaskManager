@@ -1,39 +1,56 @@
 .container-div {
   border-radius: 30px;
-  box-shadow: 10px 10px 16px 0px rgba(0, 255, 255, 0.25);
-  position: fixed;
+  box-shadow: 10px 10px 16px 0px rgba(255, 0, 183, 0.25);
+  right: 0;
+  margin-right: 3%;
+  top: 55%;
+  transform: translateY(-55%);
   overflow: hidden;
   width: 60%;
   height: 60%;
   max-width: 100%;
-  min-height: 400px;
+  max-height: 400px;
   min-width: 250px;
-  margin-top: 10%;
+  margin-top: 0;
 }
 
-.desc-logo-div{
-  justify-content: center;
+.desc-login-div {
+  display: flex;
+  flex-direction: row;
+}
+.site-descP {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.site-descP{
+.desc-box {
   width: 100%;
-  color: red;
+  max-width: 400px;
+  color: #333;
+  padding: 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  margin: 20px 0;
+  margin-left: 10%;
+  transition: background 0.3s, transform 0.3s;
+  font-size: 1.5em;
 }
 
-.logo{
-  width: 100%;
-  background-image: url("https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg");
-  background-size:30%;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  transform: translate(65%,20%);
+.desc-box:hover {
+  background: #f0d4e3;
+  transform: scale(1.05);
 }
-.container-div button:hover{
-  cursor:pointer;
-  color: aqua;
-  border: 2px solid aqua;
-  box-shadow: 4px 4px 10px 0px rgba(0, 255, 255, 0.25);
+
+.container-div button:hover {
+  cursor: pointer;
+  color: #a2d2ff;
+  border: 2px solid #a2d2ff;
+  box-shadow: 4px 4px 10px 0px rgba(0, 76, 255, 0.25);
 }
+
 .login-button,
 .ghost-button {
   padding: 2%;
@@ -41,11 +58,11 @@
   justify-content: center;
   border: 2px solid white;
   border-radius: 20px;
-  background-image: url("https://static.vecteezy.com/system/resources/previews/000/696/278/original/textured-black-background-vector.jpg");
+  background-image: url("https://encycolorpedia.ro/ffcbd9.png");
   background-size: cover;
   background-attachment: fixed;
-  background-color: rgba(128, 128, 128, 0.12);
-  box-shadow: 4px 4px 10px 0px rgba(245, 222, 179, 0.25);
+  background-color: rgba(254, 72, 178, 0.12);
+  box-shadow: 4px 4px 10px 0px rgba(243, 241, 238, 0.25);
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -85,8 +102,8 @@
 }
 
 .overlay {
-  background: rgb(126,116,116);
-  background: linear-gradient(56deg, rgba(126,116,116,1) 24%, rgba(40,37,37,1) 48%);
+  background: rgb(255, 200, 221);
+  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -100,9 +117,8 @@
 }
 
 .overlay-transform {
-  background: rgb(111,98,98);
-  background: linear-gradient(56deg, rgba(111,98,98,1) 15%, rgba(102,92,92,1) 38%, rgba(40,37,37,1) 69%);
-  background-repeat: no-repeat;
+  background: rgb(255, 200, 221);
+  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
   background-size: cover;
   background-position: 0 0;
   color: #ffffff;
@@ -186,7 +202,7 @@
   transform: translateX(20%);
 }
 
-.login-input-forgot{
+.login-input-forgot {
   color: black;
   border: none;
   padding: 12px 15px;
@@ -194,7 +210,7 @@
   width: 90%;
 }
 
-.buttons-forg{
+.buttons-forg {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -209,32 +225,32 @@
   transform: translate(-50%, -50%);
   max-width: 400px;
   width: 70%;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: #ffafcc;
   padding: 20px;
-  border: 2px solid aqua;
+  border: 2px solid #ffafcc;
   border-radius: 25px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 9999;
 }
 
-.error-mail{
+.error-mail {
   color: red;
-  font-size:12px;
+  font-size: 12px;
 }
 
-.link-zaboravljena{
+.link-zaboravljena {
   font-size: 85%;
-  color: #00ffff;
+  color: #ffffff;
   font-style: italic;
 }
 
-.link-zaboravljena:hover{
+.link-zaboravljena:hover {
   cursor: pointer;
 }
 
 .error {
   color: rgb(255, 255, 255);
-  font-size:10px;
+  font-size: 10px;
 }
 
 .parag-login {
@@ -247,8 +263,8 @@
 }
 
 .form-login {
-  background: rgb(111,98,98);
-  background: linear-gradient(56deg, rgba(111,98,98,1) 15%, rgba(102,92,92,1) 38%, rgba(40,37,37,1) 69%);
+  background: rgb(255, 200, 221);
+  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -266,12 +282,11 @@
 
 .div-pozadina {
   display: flex;
-  flex-direction: row;
-  position: fixed;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  background-image: url("https://static.vecteezy.com/system/resources/previews/000/696/278/original/textured-black-background-vector.jpg");
-  background-size:cover;
+  background-image: url("https://img.freepik.com/free-photo/pastel-pink-vignette-concrete-textured-background_53876-129734.jpg");
+  background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
   padding: 20px;
@@ -279,7 +294,7 @@
 
 .link-pocetna {
   font-size: 100%;
-  color: #00ffff;
+  color: #ffafcc;
   font-weight: bold;
 }
 
@@ -291,7 +306,8 @@
   margin: 8px 0;
   width: 100%;
 }
-.prijavljenPage{
+
+.prijavljenPage {
   display: flex;
   background-image: url("https://static.vecteezy.com/system/resources/previews/000/696/278/original/textured-black-background-vector.jpg");
   background-size: cover;
@@ -299,45 +315,50 @@
   width: 100%;
   height: 100vh;
 }
-.prijavljen{
-    display: flex;
-    width: 50%;
-    margin: auto;
-    height: fit-content;
-    flex-direction: column;
-    padding: 10px;
-    align-items: center;
-    border: 4px solid white;
-    background-color: rgba(128, 128, 128, 0.12);
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5);
+
+.prijavljen {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  height: fit-content;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+  border: 4px solid white;
+  background-color: rgba(128, 128, 128, 0.12);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5);
 }
+
 .App h1 {
   text-align: center;
 }
-.NastaviKaoGost{
+
+.NastaviKaoGost {
   font-size: small;
 }
 
 
-@media screen and (max-width: 768px){
-  .container-div h1{
+@media screen and (max-width: 768px) {
+  .container-div h1 {
     font-size: small;
-    
+
   }
-  .div-pozadina{
+
+  .div-pozadina {
     justify-content: center;
   }
-  .logo{
-    transform: translate(30%,50%);
-    background-size:40%;
+
+  .logo {
+    transform: translate(30%, 50%);
+    background-size: 40%;
   }
 
   label, p {
     font-size: 60% !important;
-  } 
+  }
 
-  .login-button, .ghost-button{
+  .login-button, .ghost-button {
     display: flex;
     justify-content: center;
     height: 2px;
@@ -346,29 +367,124 @@
     max-width: 4px;
   }
 
-  .container-div input{
+  .container-div input {
     height: fit-content;
     font-size: 8px !important;
     padding: 5px 2px;
   }
-.form-login{
-  padding: 5px;
-}
-.container-div{
-  height: fit-content;
-}
-}
 
-@media screen and (max-height: 660px){
-
-  .logo{
-    transform: translate(30%,70%);
-    background-size:40%;
+  .form-login {
+    padding: 5px;
   }
-  .div-pozadina{
+
+  .container-div {
+    height: fit-content;
+  }
+
+  
+
+}
+
+@media screen and (max-height: 660px) {
+
+  .logo {
+    transform: translate(30%, 70%);
+    background-size: 40%;
+  }
+
+  .div-pozadina {
     padding: 0px;
   }
-  .div-pozadina label, .div-pozadina a{
+
+  .div-pozadina label, .div-pozadina a {
     font-size: small !important;
   }
+}
+
+/* General Container Styling */
+.info-section {
+  background-color: #f9f1f5;
+  /* Light pink background for a soft appearance */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  /* Space between sections */
+  margin-top: 20px;
+}
+
+/* Headings */
+.info-section h1 {
+  font-size: 2.5em;
+  color: #4a4a4a;
+  /* Darker color for contrast */
+  margin-bottom: 10px;
+}
+
+.info-section h2 {
+  font-size: 1.8em;
+  color: #6c63ff;
+  /* Custom blue color for emphasis */
+  margin-bottom: 20px;
+}
+
+/* Paragraph styles */
+.info-section p {
+  font-size: 1.1em;
+  color: #333333;
+  /* Neutral text color */
+  line-height: 1.6;
+}
+
+/* Info Cards Styling */
+.info-cards {
+  display: flex;
+  gap: 20px;
+  /* Space between cards */
+  flex-wrap: wrap;
+  /* Allow cards to wrap on smaller screens */
+}
+
+.info-card {
+  background-color: #ffffff;
+  /* White background for contrast */
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1 1 200px;
+  /* Flex properties for responsive design */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  /* Smooth transition for hover effects */
+}
+
+/* Card Hover Effect */
+.info-card:hover {
+  transform: translateY(-5px);
+  /* Slight lift on hover */
+}
+
+/* Card Titles */
+.info-card h3 {
+  font-size: 1.5em;
+  color: #6c63ff;
+  /* Same emphasis color as h2 */
+  margin-bottom: 10px;
+}
+
+/* Card Button Styling */
+.info-card button {
+  background-color: #0079bf;
+  /* Trello blue */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  /* Smooth transition for button */
+}
+
+.info-card button:hover {
+  background-color: #005a8c;
+  /* Darker blue on hover */
 }

@@ -15,7 +15,8 @@ function App() {
 
   return (
     <div className="app">
-      {!isHomePage && token && <Navbar />}
+     {/*  {!isHomePage && token && <Navbar />} */}
+     <Navbar/>
       <section className="content">
         <Routes>
           <Route path="/" element={<HomePage />} />
