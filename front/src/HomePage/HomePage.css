@@ -1,40 +1,42 @@
-.container-div {
-  border-radius: 30px;
-  box-shadow: 10px 10px 16px 0px rgba(255, 0, 183, 0.25);
-  right: 0;
-  margin-right: 3%;
-  top: 55%;
-  transform: translateY(-55%);
-  overflow: hidden;
-  width: 60%;
-  height: 60%;
-  max-width: 100%;
-  max-height: 400px;
-  min-width: 250px;
-  margin-top: 0;
-}
-
 .desc-login-div {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  height:90vh;
 }
+
+.container-div {
+  border-radius: 30px;
+  box-shadow: 10px 10px 16px 0px rgba(255, 0, 183, 0.25);
+  transform: translateY(0px);
+  overflow: hidden;
+  width: 70%;
+  height: 80%;
+  min-width: 250px;
+  min-height: 250px;
+  margin-top:2%;
+  margin-left: 2.5%;
+  margin-right: 5%;
+}
+
 .site-descP {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 30%;
+  height: 100%;
+  margin-top:2%;
+  margin-left:5%;
+  margin-right: 2.5%;
 }
 
 .desc-box {
   width: 100%;
-  max-width: 400px;
   color: #333;
-  padding: 20px;
   border-radius: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-family: 'Poppins', sans-serif;
-  margin: 20px 0;
-  margin-left: 10%;
   transition: background 0.3s, transform 0.3s;
   font-size: 1.5em;
 }
@@ -85,7 +87,6 @@
 
 .signup-transform,
 .signup {
-  position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
@@ -289,7 +290,6 @@
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  padding: 20px;
 }
 
 .link-pocetna {
@@ -339,78 +339,25 @@
 }
 
 
-@media screen and (max-width: 768px) {
-  .container-div h1 {
-    font-size: small;
-
-  }
-
-  .div-pozadina {
-    justify-content: center;
-  }
-
-  .logo {
-    transform: translate(30%, 50%);
-    background-size: 40%;
-  }
-
-  label, p {
-    font-size: 60% !important;
-  }
-
-  .login-button, .ghost-button {
+@media screen and (max-width: 800px){
+  .desc-login-div {
     display: flex;
-    justify-content: center;
-    height: 2px;
-    font-weight: 100;
-    font-size: 8px !important;
-    max-width: 4px;
-  }
-
-  .container-div input {
-    height: fit-content;
-    font-size: 8px !important;
-    padding: 5px 2px;
-  }
-
-  .form-login {
-    padding: 5px;
-  }
-
-  .container-div {
-    height: fit-content;
-  }
-
-  
-
-}
-
-@media screen and (max-height: 660px) {
-
-  .logo {
-    transform: translate(30%, 70%);
-    background-size: 40%;
-  }
-
-  .div-pozadina {
-    padding: 0px;
-  }
-
-  .div-pozadina label, .div-pozadina a {
-    font-size: small !important;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
 /* General Container Styling */
 .info-section {
+  display: flex;
+  flex-direction: column;
   background-color: #f9f1f5;
   /* Light pink background for a soft appearance */
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
+  margin: 20px;
   /* Space between sections */
-  margin-top: 20px;
 }
 
 /* Headings */

@@ -177,7 +177,7 @@ const HomePage = () => {
 
   return (
     <div className="div-pozadina">
-      {popup === true ? (
+      {popup === true && (
         <div className="forgot-password">
           <label style={{ textAlign: "center" }}>Introduceți adresa dvs. de e-mail pentru a reseta parola</label>
           <input
@@ -192,11 +192,20 @@ const HomePage = () => {
             <button className="login-button" onClick={() => setPopup(false)}>Anulează</button>
           </div>
         </div>
-      ) : (
-        ""
       )}
       <div className="desc-login-div">
-        <div className="container-div">
+          <div className="site-descP">
+            <div className="desc-box">
+              <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
+            </div>
+            <div className="desc-box">
+              <p>📅 Planificați, urmăriți 👀 și colaborați fără efort. 🤝</p>
+            </div>
+            <div className="desc-box">
+              <p>💡Transformă haosul în claritate și productivitatea într-o briză!💨🚀</p>
+            </div>
+        </div>
+                <div className="container-div">
           <SignUpContainer>
             <form className="form-login" onSubmit={handleSignupSubmit}>
               <h1 className="title">Creați un profil</h1>
@@ -286,18 +295,6 @@ const HomePage = () => {
               </RightOverlayPanel>
             </Overlay>
           </OverlayContainer>
-        </div>
-          <div className="site-descP">
-            <div className="desc-box">
-              <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
-            </div>
-            <div className="desc-box">
-              <p>📅 Planificați, urmăriți 👀 și colaborați fără efort. 🤝</p>
-            </div>
-            <div className="desc-box">
-              <p>💡Transformă haosul în claritate și productivitatea într-o briză!💨🚀</p>
-            </div>
-          
         </div>
       </div>
       <div className="info-section">
