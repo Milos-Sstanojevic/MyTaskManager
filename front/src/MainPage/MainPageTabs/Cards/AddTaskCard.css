@@ -2,21 +2,22 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 250px; /* Same height as .task-card */
-    width: 200px; /* Same width as .task-card */
+    justify-content: center;
+    height: 250px; 
+    width: 200px; 
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(255, 8, 8, 0.661);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.661); 
     margin: 10px;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
     text-align: center;
     overflow: hidden;
-    background-color: #d3d3d3;
+    background-color: #ffebee; 
     cursor: pointer;
 }
 
 .task-card.add-new-task-card:hover {
-    box-shadow: 0 8px 16px #08ff4e83;
+    box-shadow: 0 8px 16px rgba(255, 105, 180, 0.8); 
+    transform: scale(1.05); 
 }
 
 .task-card.add-new-task-card:hover::before {
@@ -26,20 +27,20 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3); 
     z-index: 1;
 }
 
 .plus-sign {
-    font-size: 2rem;
-    margin-top: 70px; /* Adjust this to center the plus sign vertically */
-    color: #333;
+    font-size: 3rem; 
+    margin-top: 50px; 
+    color: #ff1493;
     z-index: 2;
 }
 
 .task-name {
-    font-size: 1.2rem;
+    font-size: 1.5rem; 
     font-weight: bold;
-    color: #333;
+    color: #ff1493; 
     z-index: 2;
 }

@@ -23,6 +23,7 @@ const HomePage = () => {
   const [popup, setPopup] = useState(false);
   const [errorForgMail, setErrorForgMail] = useState("");
   const [forgotEmail, setForgotEmail] = useState("");
+  const [showCards, setShowCards] = useState(false); 
 
 
   const guestOnClick = () => {
@@ -174,6 +175,9 @@ const HomePage = () => {
         console.log(err);
       })
   }
+  const toggleCards = () => {
+    setShowCards(!showCards); // Toggle the visibility of the cards
+  };
 
   return (
     <div className="div-pozadina">
@@ -194,18 +198,18 @@ const HomePage = () => {
         </div>
       )}
       <div className="desc-login-div">
-          <div className="site-descP">
-            <div className="desc-box">
-              <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
-            </div>
-            <div className="desc-box">
-              <p>📅 Planificați, urmăriți 👀 și colaborați fără efort. 🤝</p>
-            </div>
-            <div className="desc-box">
-              <p>💡Transformă haosul în claritate și productivitatea într-o briză!💨🚀</p>
-            </div>
+        <div className="site-descP">
+          <div className="desc-box">
+            <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
+          </div>
+          <div className="desc-box">
+            <p>📅 Planificați, urmăriți 👀 și colaborați fără efort. 🤝</p>
+          </div>
+          <div className="desc-box">
+            <p>💡Transformă haosul în claritate și productivitatea într-o briză!💨🚀</p>
+          </div>
         </div>
-                <div className="container-div">
+        <div className="container-div">
           <SignUpContainer>
             <form className="form-login" onSubmit={handleSignupSubmit}>
               <h1 className="title">Creați un profil</h1>
@@ -298,28 +302,65 @@ const HomePage = () => {
         </div>
       </div>
       <div className="info-section">
-        <h1>Work Smarter</h1>
-        <h2>Do more with Trello</h2>
-        <p>Customize the way you organize with easy integrations, automation, and mirroring of your to-dos across multiple locations.</p>
-
-        <div className="info-cards">
+        <h1>Creșteți productivitatea</h1>
+        <h2>Obțineți mai mult cu SparkleNest</h2>
+        <p>Rămâneți la curent cu sarcinile dvs. cu integrări perfecte, automatizare puternică și sincronizare în timp real pentru toate proiectele dvs.</p>
+        <button className="toggle-button" onClick={toggleCards}>
+          {showCards ? "🔼 Ascundeți cardurile" : "🔽 Arătați cardurile"} {/* Toggle button with arrows */}
+        </button>
+        <div className={`info-cards ${showCards ? "show" : "hide"}`}>
           <div className="info-card">
-            <h3>Integrations</h3>
-            <p>Connect the apps your team already uses into your Trello workflow or add a Power-Up to fine-tune your specific needs.</p>
-            <button>Browse Integrations</button>
+            <h3>Notează-l, rămâi în control</h3>
+            <p>Transformă-ți gândurile în acțiune - adaugă sarcini de oriunde și oricând.</p>
           </div>
           <div className="info-card">
-            <h3>Butler Automation</h3>
-            <p>No-code automation is built into every Trello board. Focus on the work that matters most and let the robots do the rest.</p>
-            <button>Get to know Automation</button>
+            <h3>Structurați-vă fluxul de lucru</h3>
+            <p>De la mici comisioane la proiecte mari, ține totul sub control cu ​​un sistem care funcționează pentru tine. Marcați sarcinile ca „în desfășurare”, „în așteptare” sau „finalizate”.</p>
           </div>
           <div className="info-card">
-            <h3>Card Mirroring</h3>
-            <p>View your to-dos from different boards in more than one place. Mirror a card to keep track of work wherever you need it!</p>
+            <h3>Gestionați-vă timpul fără efort</h3>
+            <p>Mutați sarcinile, setați prioritățile și programați-vă cea mai importantă activitate în doar câteva clicuri</p>
           </div>
         </div>
+
       </div>
+      <div className="contact-section">
+  <h2>Contactați-ne</h2>
+  <p>Dacă aveți întrebări sau sugestii, nu ezitați să ne contactați!</p>
+  <form className="contact-form">
+    <input 
+      type="text" 
+      placeholder="Nume"
+      required 
+      className="contact-input" />
+      <input
+      type="text"
+      placeholder="Prenume"
+      required
+      className="contact-input"/>
+    <input 
+      type="email" 
+      placeholder="Email" 
+      required 
+      className="contact-input" />
+    <textarea 
+      placeholder="Mesaj" 
+      required 
+      className="contact-textarea"></textarea>
+    <button type="submit" className="contact-button">Trimite</button>
+  </form>
+</div>
+<footer className="footer">
+  <p>
+    Contact: <a href="mailto:hello@sparklentest.com">ivana@sparklentest.com</a>
+  </p>
+  <p>
+    © {new Date().getFullYear()} SparkleNest. All rights reserved.
+  </p>
+</footer>
+
     </div>
+    
 
 
   );

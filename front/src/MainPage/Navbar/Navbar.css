@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #f7d6e0;
+  background-color: #f5dfbb;
   color: #333;
   font-family: 'Arial', sans-serif;
 }
@@ -36,7 +36,7 @@
 }
 
 .nav-item:hover {
-  background-color: #ffc2d1;
+  background-color: #ffe6a7;
   color: #333;
   border-radius: 5px;
 }

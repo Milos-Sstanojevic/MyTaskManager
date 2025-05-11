@@ -60,17 +60,18 @@
 
 .submit-btn,
 .edit-task-btn {
-    background: #007bff;
+    background: #d65a9a;
     color: white;
     border: none;
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
+    transform: translateY(-2px);
 }
 
 .submit-btn:hover,
 .edit-task-btn:hover {
-    background: #0056b3;
+    background: #f76dbd;
 }
 
 .start-date {
