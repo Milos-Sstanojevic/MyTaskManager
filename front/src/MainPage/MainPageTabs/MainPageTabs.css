@@ -2,7 +2,10 @@
 .container-tabs {
     width: 100%;
     background-color: #ffeff6; /* Soft pink background */
-    padding: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
     border-radius: 12px; /* Rounded corners for the container */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
