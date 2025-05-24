@@ -7,15 +7,17 @@ import CalendarTab from "./CalendarTab/CalendarTab";
 const fetchLink = "http://localhost:5164/Task/"
 
 const MainPageTabs = () => {
-    const [toggleState, setToggleState] = useState("MyTasks");
-    const [linkToFetch, setLinkToFetch] = useState("GetAllTasksOfUser");
+    const [toggleState, setToggleState] = useState("Personal");
+    const [linkToFetch, setLinkToFetch] = useState("GetAllPersonalTasksOfUser");
     const [fetchedTasks, setFetchedTasks] = useState([]);
     const [filter, setFilter] = useState("All");
 
     const toggleTab = (index) => {
         setToggleState(index)
-        if (index === "MyTasks")
-            setLinkToFetch("GetAllTasksOfUser");
+        if (index === "Personal")
+            setLinkToFetch("GetAllPersonalTasksOfUser");
+        else if (index === "Team")
+            setLinkToFetch("GetAllTeamTasksOfUser")
         else if (index === "MemberedTasks")
             setLinkToFetch("GetAllTasksUserIsMemberOf");
     }
@@ -23,7 +25,7 @@ const MainPageTabs = () => {
     useEffect(() => {
         fetchData();
     }, [linkToFetch])
-    
+
 
     const fetchData = async () => {
         try {
@@ -41,6 +43,7 @@ const MainPageTabs = () => {
                     ...task,
                     ownerOfTask: task.ownerOfTask ? task.ownerOfTask.userName : 'Unknown',
                 }));
+
                 setFetchedTasks(processedData);
             }
             else {
@@ -57,7 +60,7 @@ const MainPageTabs = () => {
     }
 
     const handleOnCompleteTask = (completedTask) => {
-        setFetchedTasks((prevTasks) => prevTasks.map((task) => task.id === completedTask.id  ? completedTask : task));
+        setFetchedTasks((prevTasks) => prevTasks.map((task) => task.id === completedTask.id ? completedTask : task));
     }
 
     const handleUpdateTask = (updatedTask) => {
@@ -66,19 +69,20 @@ const MainPageTabs = () => {
 
     const handleAddNewTask = (task) => {
         const newTask = {
-        ...task,
-        ownerOfTask: task.ownerOfTask ? task.ownerOfTask.userName : 'Unknown',
+            ...task,
+            ownerOfTask: task.ownerOfTask ? task.ownerOfTask.userName : 'Unknown',
         };
         setFetchedTasks((prevTasks) => [...prevTasks, newTask]);
     }
 
-    const filteredTasks = filter === "All" ? fetchedTasks : fetchedTasks.filter(task => task.stateOfTask == filter);
+    const filteredTasks = filter === "All" ? fetchedTasks : fetchedTasks.filter(task => task.stateOfTask === filter);
 
 
     return (
         <div className="container-tabs">
             <div className="bloc-tabs">
-                <div className={toggleState === "MyTasks" ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab("MyTasks")}>My Tasks</div>
+                <div className={toggleState === "Personal" ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab("Personal")}>Personal</div>
+                <div className={toggleState === "Team" ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab("Team")}>Team</div>
                 <div className={toggleState === "MemberedTasks" ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab("MemberedTasks")}>Membered Tasks</div>
                 <div className={toggleState === "Calender" ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab("Calender")}>Calender</div>
             </div>
@@ -97,18 +101,26 @@ const MainPageTabs = () => {
                     </div>
                 }
 
-                <div className={toggleState === "MyTasks" ? "board active-board" : "board"}>
-                    {filteredTasks.length>0 && filteredTasks.map((t) => (
-                        <Card key={t.id} task={t} onDeleteTask={handleOnDeleteTask} onCompleteTask={handleOnCompleteTask} onUpdateTask={handleUpdateTask}/>
-                        ))
+                <div className={toggleState === "Personal" ? "board active-board" : "board"}>
+                    {filteredTasks.length > 0 && filteredTasks.map((t) => (
+                        <Card key={t.id} task={t} onDeleteTask={handleOnDeleteTask} onCompleteTask={handleOnCompleteTask} onUpdateTask={handleUpdateTask} />
+                    ))
+                    }
+                    <AddTaskCard onAddTask={handleAddNewTask} />
+                </div>
+
+                <div className={toggleState === "Team" ? "board active-board" : "board"}>
+                    {filteredTasks.length > 0 && filteredTasks.map((t) => (
+                        <Card key={t.id} task={t} onDeleteTask={handleOnDeleteTask} onCompleteTask={handleOnCompleteTask} onUpdateTask={handleUpdateTask} />
+                    ))
                     }
                     <AddTaskCard onAddTask={handleAddNewTask} />
                 </div>
 
                 <div className={toggleState === "MemberedTasks" ? "board active-board" : "board"}>
-                    {filteredTasks.length>0 && filteredTasks.map((t) => (
-                        <Card key={t.id} task={t} onDeleteTask={handleOnDeleteTask} onCompleteTask={handleOnCompleteTask}/>
-                        ))
+                    {filteredTasks.length > 0 && filteredTasks.map((t) => (
+                        <Card key={t.id} task={t} onDeleteTask={handleOnDeleteTask} onCompleteTask={handleOnCompleteTask} />
+                    ))
                     }
                 </div>
 

@@ -19,29 +19,11 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-  const [notVerified, setNotVerified] = useState(true);
   const [popup, setPopup] = useState(false);
   const [errorForgMail, setErrorForgMail] = useState("");
   const [forgotEmail, setForgotEmail] = useState("");
-  const [showCards, setShowCards] = useState(false); 
+  const [showCards, setShowCards] = useState(false);
 
-
-  const guestOnClick = () => {
-    localStorage.setItem("Guest", true);
-  };
-  if (localStorage.getItem("token")) {
-    return (
-      <div className="prijavljenPage">
-        <div className="prijavljen">
-          <h1>Korisnik je vec prijavljen</h1>
-          <br />
-          <NavLink to="/" className="link-pocetna">
-            Pocetna stranica!
-          </NavLink>
-        </div>
-      </div>
-    );
-  }
 
   const resetInputs = () => {
     toggle(true);
@@ -118,12 +100,10 @@ const HomePage = () => {
           await res.text().then((text) => {
             console.log(text);
             setErrorMessage(text);
-            setNotVerified(true);
             throw text;
           });
         } else {
           setErrorMessage("");
-          setNotVerified(false);
         }
       });
 
@@ -197,7 +177,7 @@ const HomePage = () => {
           </div>
         </div>
       )}
-      <div className="desc-login-div">
+      <div className="desc-login-div" id="login">
         <div className="site-descP">
           <div className="desc-box">
             <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
@@ -301,7 +281,7 @@ const HomePage = () => {
           </OverlayContainer>
         </div>
       </div>
-      <div className="info-section">
+      <div className="info-section" id="about-us">
         <h1>Creșteți productivitatea</h1>
         <h2>Obțineți mai mult cu SparkleNest</h2>
         <p>Rămâneți la curent cu sarcinile dvs. cu integrări perfecte, automatizare puternică și sincronizare în timp real pentru toate proiectele dvs.</p>
@@ -324,43 +304,43 @@ const HomePage = () => {
         </div>
 
       </div>
-      <div className="contact-section">
-  <h2>Contactați-ne</h2>
-  <p>Dacă aveți întrebări sau sugestii, nu ezitați să ne contactați!</p>
-  <form className="contact-form">
-    <input 
-      type="text" 
-      placeholder="Nume"
-      required 
-      className="contact-input" />
-      <input
-      type="text"
-      placeholder="Prenume"
-      required
-      className="contact-input"/>
-    <input 
-      type="email" 
-      placeholder="Email" 
-      required 
-      className="contact-input" />
-    <textarea 
-      placeholder="Mesaj" 
-      required 
-      className="contact-textarea"></textarea>
-    <button type="submit" className="contact-button">Trimite</button>
-  </form>
-</div>
-<footer className="footer">
-  <p>
-    Contact: <a href="mailto:hello@sparklentest.com">ivana@sparklentest.com</a>
-  </p>
-  <p>
-    © {new Date().getFullYear()} SparkleNest. All rights reserved.
-  </p>
-</footer>
+      <div className="contact-section" id="contact">
+        <h2>Contactați-ne</h2>
+        <p>Dacă aveți întrebări sau sugestii, nu ezitați să ne contactați!</p>
+        <form className="contact-form">
+          <input
+            type="text"
+            placeholder="Nume"
+            required
+            className="contact-input" />
+          <input
+            type="text"
+            placeholder="Prenume"
+            required
+            className="contact-input" />
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            className="contact-input" />
+          <textarea
+            placeholder="Mesaj"
+            required
+            className="contact-textarea"></textarea>
+          <button type="submit" className="contact-button">Trimite</button>
+        </form>
+      </div>
+      <footer className="footer">
+        <p>
+          Contact: <a href="mailto:hello@sparklentest.com">ivana@sparklentest.com</a>
+        </p>
+        <p>
+          © {new Date().getFullYear()} SparkleNest. All rights reserved.
+        </p>
+      </footer>
 
     </div>
-    
+
 
 
   );

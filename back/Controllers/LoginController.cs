@@ -260,4 +260,96 @@ public class LoginController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
+
+    [HttpPost("SendEmail/{email}")]
+    public async Task<ActionResult> SendEmail(string email, [FromBody] string message)
+    {
+        try
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+                if (identity == null)
+                {
+                    return BadRequest("Greska pri pribavljanju trenutnog korisnika");
+                }
+                var userClaims = identity.Claims;
+                int id = int.Parse(userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Sid)!.Value);
+
+                var user = await Context.Users.Where(p => p.ID == id).FirstOrDefaultAsync();
+
+                if (user == null)
+                    return BadRequest("Greska pri pribavljanju podataka o trenutnom user-u");
+
+                SmtpClient Client = new SmtpClient()
+                {
+                    Host = "smtp.outlook.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential()
+                    {
+                        UserName = "sparklenest2001@outlook.com",
+                        Password = "gylmrnzfmbbfuhdg"
+                    }
+                };
+
+                MailAddress fromMail = new MailAddress("sparklenest2001@outlook.com", user.UserName + " - " + user.Email);
+                MailAddress toMail = new MailAddress("sparklenest2001@outlook.com", "SparkleNest");
+                MailMessage mesg = new MailMessage()
+                {
+                    From = fromMail,
+                    Subject = "Mejl korisnika",
+                    Body = message
+                };
+
+                mesg.To.Add(toMail);
+                await Client.SendMailAsync(mesg);
+
+                return Ok("Uspesno poslat mejl");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(email);
+                if (String.IsNullOrEmpty(email) || String.IsNullOrWhiteSpace(email) || String.Compare(email, "undefined") == 0)
+                {
+                    return BadRequest("Morate uneti svoju email adresu");
+                }
+                SmtpClient Client = new SmtpClient()
+                {
+                    Host = "smtp.outlook.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential()
+                    {
+                        UserName = "testerswe@outlook.com",
+                        Password = "projekatSWE123"
+                    }
+                };
+
+                MailAddress fromMail = new MailAddress("testerswe@outlook.com", "Guest - " + email);
+                MailAddress toMail = new MailAddress("quiz.m2s@outlook.com", "Quiz'M2S");
+                MailMessage mesg = new MailMessage()
+                {
+                    From = fromMail,
+                    Subject = "Mejl korisnika",
+                    Body = message
+                };
+
+                mesg.To.Add(toMail);
+                await Client.SendMailAsync(mesg);
+
+                return Ok("Uspesno poslat mejl");
+            }
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
 }
