@@ -25,8 +25,7 @@ const CalendarTab = ({ tasks }) => {
 
   const sanitizeDate = (dateStr) => {
     if (!dateStr) return null;
-    const clean = dateStr.slice(0, 23);
-    return new Date(clean);
+    return typeof dateStr === "string" ? new Date(dateStr) : dateStr;
   };
 
   useEffect(() => {

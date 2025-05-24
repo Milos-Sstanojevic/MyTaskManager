@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ public class TaskController : ControllerBase
             if (user == null)
                 return BadRequest("No user is logged in!");
 
-            var tasks = await Context.ToDoTasks.Where(t => t.TaskName.Equals(task.TaskName) && t.OwnerOfTask.UserName.Equals(user.UserName)).FirstOrDefaultAsync();
+            var tasks = await Context.ToDoTasks.Include(u => u.OwnerOfTask).Where(t => t.TaskName.Equals(task.TaskName) && t.OwnerOfTask.UserName.Equals(user.UserName)).FirstOrDefaultAsync();
 
             if (tasks != null)
                 return BadRequest("Task with that name already exist for this user");
