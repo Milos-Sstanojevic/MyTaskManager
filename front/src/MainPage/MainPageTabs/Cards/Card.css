@@ -1,72 +1,130 @@
+:root {
+  /* Color & theme vars */
+  --card-bg-start:   #faf7f1;
+  --card-bg-end:     #f2e9d8;
+  --accent-start:    #f7e8d5;
+  --accent-end:      #f1dbb5;
+  --shadow-light:    rgba(101, 67, 33, 0.2);
+  --shadow-dark:     rgba(101, 67, 33, 0.4);
+  --overlay-color:   rgba(0, 0, 0, 0.08);
+  --font-main:       'Poppins', sans-serif;
+  --radius:          0.75rem;
+  --transition:      0.35s ease-out;
+}
+
+/* —— Card Container —— */
 .task-card {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 250px;
   width: 200px;
-  border-radius: 10px; /* Softer look */
-  box-shadow: 0 4px 8px rgba(101, 67, 33, 0.3); /* Warm brown shadow */
+  height: 250px;
   margin: 10px;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--card-bg-start), var(--card-bg-end));
+  border: 1px solid var(--accent-end);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 8px var(--shadow-light);
+  font-family: var(--font-main);
+  color: #4a2c18;
   overflow: hidden;
-  background: #fdf6ec; /* Soft cream background */
+  transition: 
+    box-shadow var(--transition), 
+    transform var(--transition);
+  will-change: transform;
 }
 
-.task-card:hover {
-  box-shadow: 0 8px 16px rgba(101, 67, 33, 0.5); /* Deeper brown shadow */
-  cursor: pointer;
-  transform: translateY(-5px); /* Subtle lift */
-}
-
-.task-card:hover::before {
+/* —— Top Accent Bar —— */
+.task-card::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.1); /* Light overlay */
+  left: 50%;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.5s var(--transition);
+}
+
+/* —— Hover Effects —— */
+.task-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 16px var(--shadow-dark);
+}
+.task-card:hover::before {
+  width: 80%;
+}
+
+/* —— Subtle Overlay on Hover —— */
+.task-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  transition: background var(--transition);
+}
+.task-card:hover::after {
+  background: var(--overlay-color);
   z-index: 1;
 }
 
-.task-actions {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  gap: 15px;
+/* —— Content Layers —— */
+.task-card > * {
+  position: relative;
   z-index: 2;
 }
+.task-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.task-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+/* —— Action Buttons —— */
+.task-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
 .task-actions button {
+  width: 36px;
+  height: 36px;
   border: none;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  width: 45px;
-  height: 45px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 
+    background var(--transition), 
+    transform var(--transition);
+}
+.task-actions button:hover {
+  transform: scale(1.15);
 }
 
+/* —— Delete & Complete Colors —— */
 .delete-btn {
-  background: rgba(255, 0, 0, 0.8); /* Red */
+  background: #e74c3c;
 }
-
 .delete-btn:hover {
-  background: rgba(255, 0, 0, 1); /* Darker red on hover */
+  background: #c0392b;
 }
-
 .complete-btn {
-  background: rgba(76, 175, 80, 0.8); /* Green */
+  background: #27ae60;
 }
-
 .complete-btn:hover {
-  background: rgba(76, 175, 80, 1); /* Darker green on hover */
+  background: #1e8449;
 }

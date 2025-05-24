@@ -1,50 +1,135 @@
 /* Main container for the whole tab component */
 .container-tabs {
-    width: 100%;
-    background-color: #fdf6ec; /* Soft cream */
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(101, 67, 33, 0.1); /* Warm brown shadow */
+  display: flex;
+  flex-direction: column;
+  width: 100vw;            /* span full viewport width */
+  height: 100vh;           /* span full viewport height */
+  max-width: none;         /* remove any capping max-width */
+  margin: 0;               /* drop any auto centering margins */
+  padding: 40px;           /* adjust to taste */
+  box-sizing: border-box;
+  background-color: #fdf6ec;
+  border-radius: 0;        /* if you don’t want rounded at full-screen */
+  box-shadow: none;        /* optional: remove shadow at full screen */
 }
-
 /* Tab navigation styles */
 .bloc-tabs {
-    display: flex;
-    position: relative;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;   /* align to left, or center if you prefer */
+  align-items: center;
+  gap: 0.75rem;                   /* space between tabs */
+  padding: 0 1rem;                /* horizontal breathing room */
+  background: #fffaf3;            /* same as inputs’ background */
+  border-bottom: 3px solid #e4d3bd; /* light cream/brown divider */
+}
+.tabs {
+  background: transparent;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #5a5a5a;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s, background 0.3s;
 }
 
-.tabs {
-    padding: 12px 25px;
-    border: 2px solid #a67b5b; /* Medium brown */
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s, color 0.3s;
-    font-weight: bold;
-    color: #5a5a5a;
-    margin-right: 10px;
-}
 
 .tabs:hover {
-    background: #e6d3b3; /* Hover cream */
-    transform: scale(1.05);
-    color: #3e2a1a;
+  color: #4a2c18;
+  background: #e6d3b3;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .active-tabs {
-    background: #d9c2a3; /* Active tab background */
-    border-bottom: none;
-    position: relative;
-    top: 2px;
+  color: #4a2c18;
+  background: #fdf6ec;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
+
+/* —— Tab Icons via Unicode Dingbats —— */
+.bloc-tabs .tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+/* Personal: single-person bust */
+.bloc-tabs .tabs:nth-child(1)::before {
+  content: "\1F464";         /* Unicode U+1F464 BUST IN SILHOUETTE */
+  font-size: 1.1rem;
+   color: var(--color-accent);
+}
+
+/* Team: multiple busts */
+.bloc-tabs .tabs:nth-child(2)::before {
+  content: "\1F465";         /* Unicode U+1F465 THREE BUSTS IN SILHOUETTE */
+  font-size: 1.1rem;
+   color: var(--color-accent);
+}
+
+/* Membered Tasks: handshake icon */
+.bloc-tabs .tabs:nth-child(3)::before {
+  content: "\270D";           /* Unicode U+270D WRITING HAND (represents “collaboration”) */
+  font-size: 1.1rem;
+  color: var(--color-secondary);
+}
+
+/* Calendar: calendar icon */
+.bloc-tabs .tabs:nth-child(4)::before {
+  content: "\1F4C5";         /* Unicode U+1F4C5 CALENDAR */
+  font-size: 1.1rem;
+  color: var(--color-accent-hover);
+}
+
+
 
 /* Dropdown styles */
+/* Filter dropdown container */
 .filter-dropdown {
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* Label */
 .filter-dropdown label {
-    font-weight: bold;
+  font-weight: 600;
+  color: #4a2c18;
+  white-space: nowrap;
+}
+
+/* Select */
+.filter-dropdown select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: #4a2c18;
+  background: #fffaf3;
+  border: 1px solid #c2a580;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6H0z' fill='%234a2c18'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 10px 6px;
+}
+
+/* Hover & focus states */
+.filter-dropdown select:hover {
+  border-color: #a67b5b;
+}
+
+.filter-dropdown select:focus {
+  outline: none;
+  border-color: #8b5e3c;
+  box-shadow: 0 0 4px rgba(139, 94, 60, 0.4);
 }
 
 select {
@@ -63,12 +148,14 @@ select:hover {
 
 /* Boards container */
 .boards {
+    flex: 1;
     display: flex;
     flex-direction: column;
     border: 2px solid #e4d3bd;
     padding: 20px;
     border-radius: 10px;
     margin-top: 10px;
+     overflow: visible;
 }
 
 /* Individual board hidden/shown */
@@ -80,6 +167,7 @@ select:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    width: 100%;
 }
 
 /* Card styles */
