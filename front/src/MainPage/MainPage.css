@@ -1,11 +1,11 @@
 .container {
   width: 100%;
   height: 100vh;
-  border: 2px solid black;
+  border: 2px solid #8b5e3c;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  background-color: #f4f4f4;
+  background-color: #fdf6ec; /* warm cream */
 }
 
 .top-bar {
@@ -13,16 +13,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border-bottom: 2px solid black;
-  background-color: #e0e0e0;
+  border-bottom: 2px solid #a67b5b;
+  background-color: #f0e0cc;
 }
 
 .profile-pic {
   width: 40px;
   height: 40px;
-  border: 2px solid black;
+  border: 2px solid #5c4033;
   border-radius: 50%;
-  background-color: lightblue;
+  background-color: #c7b299; /* light coffee */
 }
 
 .buttons {
@@ -33,15 +33,16 @@
 .tab-button {
   width: 40px;
   height: 30px;
-  border: 2px solid black;
-  background-color: white;
+  border: 2px solid #5c4033;
+  background-color: #fffaf3;
   font-weight: bold;
+  color: #4a2c18;
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .tab-button:hover {
-  background-color: #ffcc00;
+  background-color: #e6d3b3;
 }
 
 .logout {
@@ -53,9 +54,9 @@
 .logout-icon {
   width: 24px;
   height: 24px;
-  border: 2px solid black;
+  border: 2px solid #5c4033;
   border-radius: 50%;
-  background-color: red;
+  background-color: #c84646; /* earthy red */
 }
 
 .main-page-content {
@@ -74,17 +75,19 @@
   transition: transform 0.2s;
 }
 
+/* Card colors using natural earthy tones */
 .card:nth-child(1) {
-  background-color: #ff5733;
+  background-color: #8b5e3c;
 }
 .card:nth-child(2) {
-  background-color: #33ff57;
+  background-color: #a67b5b;
 }
 .card:nth-child(3) {
-  background-color: #3385ff;
+  background-color: #c7b299;
+  color: #4a2c18;
 }
 .card:nth-child(4) {
-  background-color: #ff33a1;
+  background-color: #5c4033;
 }
 
 .card:hover {

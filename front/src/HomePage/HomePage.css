@@ -7,81 +7,130 @@
 
 .container-div {
   border-radius: 30px;
-  box-shadow: 10px 10px 16px 0px rgba(255, 0, 183, 0.25);
+  box-shadow: 10px 10px 16px 0px rgba(101, 67, 33, 0.25); 
   transform: translateY(0px);
   overflow: hidden;
   width: 70%;
   height: 70%;
   min-width: 250px;
   min-height: 250px;
-  margin-top:2%;
+  margin-top: 2%;
   margin-left: 2.5%;
   margin-right: 5%;
 }
 
-.site-descP {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between; 
-  gap: 10px; 
-  width: 30%;
-  height: 60%;
-  margin-top: 2%;
-  margin-left: 5%;
-  margin-right: 2.5%;
-  animation: fadeInUp 1s ease-out forwards; 
+
+:root {
+  --glass-bg:       rgba(255, 255, 255, 0.25);
+  --glass-border:   rgba(255, 255, 255, 0.8);
+  --text-color:     #4a2c18;
+  --shadow-light:   rgba(255, 255, 255, 0.4);
+  --shadow-dark:    rgba(101, 67, 33, 0.2);
+  --radius:         1rem;
+  --spacing:        1rem;
+  --transition:     0.3s ease-out;
 }
 
+/* —— Container —— */
+.site-descP {
+  width: 35%;           /* up from 30% to make cards wider */
+  max-width: 420px;     /* caps the width so it doesn’t get massive on large screens */
+  height: 65vh;         /* a bit taller than before */
+  margin: 3% auto;      /* vertical spacing + auto-centers on left/right */
+  padding: 0 1.5rem;    /* extra horizontal breathing room */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+  animation: fadeInUp 0.8s var(--transition) both;
+}
 
+/* —— Glass Card Styles —— */
+.desc-box {
+  flex: 1;                           /* equal height division */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);  /* crisp frosted border */
+  border-radius: var(--radius);
+  padding: calc(var(--spacing) * 1.2);
+  box-shadow:
+    0 4px 12px var(--shadow-dark),
+    inset 0 0 0 1px var(--shadow-light);
+  transition:
+    background var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+  text-align: center;
+  overflow: hidden;
+}
+
+.desc-box p {
+  margin: 0;
+  font-size: 1.3rem;          /* slightly larger text */
+  color: var(--text-color);
+  line-height: 1.4;
+  z-index: 1;
+}
+
+/* Hover / Focus states */
+.desc-box:hover {
+  background: rgba(255,255,255,0.4);
+  border-color: #5c4033;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 8px 20px var(--shadow-dark),
+    inset 0 0 0 1px var(--shadow-light);
+}
+
+/* Fade-in animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px); 
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0); 
+    transform: translateY(0);
+  }
+}
+
+/* Responsive fallback */
+@media (max-width: 768px) {
+  .site-descP {
+    width: 80%;
+    height: auto;
+  }
+  .desc-box {
+    flex: none;
+    height: auto;
   }
 }
 
 
-.desc-box {
-  width: 100%;
-  color: #333;
-  border-radius: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  transition: background 0.3s, transform 0.3s;
-  font-size: 1.5em;
-}
-
-.desc-box:hover {
-  background: #f0d4e3;
-  transform: scale(1.05);
-}
-
 .container-div button:hover {
   cursor: pointer;
-  color: #a2d2ff;
-  border: 2px solid #a2d2ff;
-  box-shadow: 4px 4px 10px 0px rgba(0, 76, 255, 0.25);
+  color: #8b5e3c; /* saddle brown text */
+  border: 2px solid #8b5e3c; /* matching warm border */
+  box-shadow: 4px 4px 10px 0px rgba(101, 67, 33, 0.25); /* consistent brown shadow */
 }
+
 
 .login-button,
 .ghost-button {
   padding: 2%;
   align-items: center;
   justify-content: center;
-  border: 2px solid white;
+  border: 2px solid #f5f5dc; /* light beige for soft contrast */
   border-radius: 20px;
-  background-image: url("https://encycolorpedia.ro/ffcbd9.png");
+  background-image: url("https://www.colourlovers.com/img/d2b48c/"); /* tan texture substitute */
   background-size: cover;
   background-attachment: fixed;
-  background-color: rgba(254, 72, 178, 0.12);
-  box-shadow: 4px 4px 10px 0px rgba(243, 241, 238, 0.25);
-  color: #ffffff;
+  background-color: rgba(160, 82, 45, 0.12); /* sienna tone */
+  box-shadow: 4px 4px 10px 0px rgba(101, 67, 33, 0.25); /* deep brown shadow */
+  color: #f5f5dc; /* beige text for warmth */
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -90,6 +139,7 @@
   transition: transform 80ms ease-in;
   margin: 1vh;
 }
+
 
 .login-button:active,
 .ghost-button:active {
@@ -119,8 +169,8 @@
 }
 
 .overlay {
-  background: rgb(255, 200, 221);
-  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
+  background: rgb(186, 140, 99); /* light brown base */
+  background: radial-gradient(circle, rgba(186, 140, 99, 1) 0%, rgba(101, 67, 33, 1) 100%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -133,9 +183,10 @@
   transition: transform 0.6s ease-in-out;
 }
 
+
 .overlay-transform {
-  background: rgb(111,29,27);
-  background: radial-gradient(circle, rgba(111,29,27,1) 0%, rgba(67,40,24,1) 100%);
+  background: rgb(92, 64, 51); /* walnut brown */
+  background: radial-gradient(circle, rgba(92, 64, 51, 1) 0%, rgba(51, 34, 17, 1) 100%);
   background-size: cover;
   background-position: 0 0;
   color: #ffffff;
@@ -147,6 +198,7 @@
   transition: transform 0.6s ease-in-out;
   transform: translateX(50%);
 }
+
 
 .overlay-container-transform,
 .overlay-container {
@@ -242,9 +294,9 @@
   transform: translate(-50%, -50%);
   max-width: 400px;
   width: 70%;
-  background-color: #ffafcc;
+  background-color: #a67b5b;
   padding: 20px;
-  border: 2px solid #ffafcc;
+  border: 2px solid #a67b5b;
   border-radius: 25px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 9999;
@@ -280,8 +332,8 @@
 }
 
 .form-login {
-  background: rgb(255, 200, 221);
-  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
+  background: rgb(186, 140, 99); /* warm tan */
+  background: radial-gradient(circle, rgba(186, 140, 99, 1) 0%, rgba(120, 72, 48, 1) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,6 +342,7 @@
   height: 100%;
   text-align: center;
 }
+
 
 .title {
   font-size: larger;
@@ -302,7 +355,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-image: url("https://img.freepik.com/free-photo/pastel-pink-vignette-concrete-textured-background_53876-129734.jpg");
+  background-image: url("https://img.freepik.com/free-vector/soft-brown-watercolor-texture-design-background-vector_1055-10712.jpg?semt=ais_hybrid&w=740");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -310,17 +363,25 @@
 
 .link-pocetna {
   font-size: 100%;
-  color: #ffafcc;
+  color: #8b5e3c; /* warm saddle brown */
   font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-pocetna:hover {
+  color: #5c4033; /* darker coffee brown on hover */
 }
 
 .login-input {
-  background-color: rgb(247, 247, 247);
-  color: black;
-  border: none;
+  background-color: #f5f5dc; /* soft beige */
+  color: #4a2c18; /* deep brown text */
+  border: 1px solid #d2b48c; /* light tan border */
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .prijavljenPage {
@@ -367,37 +428,30 @@
 .info-section {
   display: flex;
   flex-direction: column;
-
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px;
-
+  background-color: #fdf6ec; /* soft cream background for contrast */
 }
-
 
 .info-section h1 {
   font-size: 2.5em;
-  color: #4a4a4a;
-
+  color: #4a2c18; /* dark brown */
   margin-bottom: 10px;
 }
 
 .info-section h2 {
   font-size: 1.8em;
-  color: #c487e8;
-
+  color: #8b5e3c; /* saddle brown */
   margin-bottom: 20px;
 }
 
-
 .info-section p {
   font-size: 1.1em;
-  color: #333333;
-
+  color: #5c4033; /* medium brown */
   line-height: 1.6;
 }
-
 
 .info-cards {
   display: flex;
@@ -405,37 +459,32 @@
   gap: 20px;
   flex-wrap: nowrap;
   align-items: flex-start;
-
 }
 
-
 .info-card {
-  background-color: #ffdfef;
+  background-color: #e6d3b3; /* warm tan replacing pink */
   border-radius: 10px;
   padding: 20px;
   width: 80%;
-  max-width: 400px; 
-  height: auto; 
-  min-height: 150px; 
+  max-width: 400px;
+  height: auto;
+  min-height: 150px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
-
 
 .info-card:hover {
   transform: translateY(-5px);
 }
 
-
 .info-card h3 {
   font-size: 1.5em;
-  color: #c487e8;
+  color: #8b5e3c;
   margin-bottom: 10px;
 }
 
-
 .info-card button {
-  background-color: #c487e8;
+  background-color: #8b5e3c;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -445,118 +494,14 @@
 }
 
 .info-card button:hover {
-  background-color: #005a8c;
-}
-.desc-login-div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height:90vh;
-}
-
-.container-div {
-  border-radius: 30px;
-  box-shadow: 10px 10px 16px 0px rgba(255, 0, 183, 0.25);
-  transform: translateY(0px);
-  overflow: hidden;
-  width: 70%;
-  height: 70%;
-  min-width: 250px;
-  min-height: 250px;
-  margin-top:2%;
-  margin-left: 2.5%;
-  margin-right: 5%;
-}
-
-.site-descP {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between; 
-  gap: 10px; 
-  width: 30%;
-  height: 60%;
-  margin-top: 2%;
-  margin-left: 5%;
-  margin-right: 2.5%;
+  background-color: #5c4033; /* deeper brown instead of blue */
 }
 
 
-.desc-box {
-  width: 100%;
-  color: #333;
-  border-radius: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  transition: background 0.3s, transform 0.3s;
-  font-size: 1.5em;
-}
-
-.desc-box:hover {
-  background: #f0d4e3;
-  transform: scale(1.05);
-}
-
-.container-div button:hover {
-  cursor: pointer;
-  color: #a2d2ff;
-  border: 2px solid #a2d2ff;
-  box-shadow: 4px 4px 10px 0px rgba(0, 76, 255, 0.25);
-}
-
-.login-button,
-.ghost-button {
-  padding: 2%;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid white;
-  border-radius: 20px;
-  background-image: url("https://encycolorpedia.ro/ffcbd9.png");
-  background-size: cover;
-  background-attachment: fixed;
-  background-color: rgba(254, 72, 178, 0.12);
-  box-shadow: 4px 4px 10px 0px rgba(243, 241, 238, 0.25);
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: transform 80ms ease-in;
-  margin: 1vh;
-}
-
-.login-button:active,
-.ghost-button:active {
-  transform: scale(0.95);
-}
-
-.login-button:focus,
-.ghost-button:focus {
-  outline: none;
-}
-
-.signup-transform,
-.signup {
-  top: 0;
-  height: 100%;
-  transition: all 0.6s ease-in-out;
-  left: 0;
-  width: 50%;
-  opacity: 0;
-  z-index: 1;
-}
-
-.signup-transform {
-  transform: translateX(100%);
-  opacity: 1;
-  z-index: 5;
-}
 
 .overlay {
-  background: rgb(255, 200, 221);
-  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
+  background: rgb(186, 140, 99); /* warm caramel */
+  background: radial-gradient(circle, rgba(186, 140, 99, 1) 0%, rgba(120, 72, 48, 1) 100%); /* soft to rich brown gradient */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -569,36 +514,6 @@
   transition: transform 0.6s ease-in-out;
 }
 
-.overlay-transform {
-  background: rgb(255, 200, 221);
-  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
-  background-size: cover;
-  background-position: 0 0;
-  color: #ffffff;
-  position: relative;
-  left: -100%;
-  height: 100%;
-  width: 200%;
-  transform: translateX(0);
-  transition: transform 0.6s ease-in-out;
-  transform: translateX(50%);
-}
-
-.overlay-container-transform,
-.overlay-container {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 100%;
-  overflow: hidden;
-  transition: transform 0.6s ease-in-out;
-  z-index: 100;
-}
-
-.overlay-container-transform {
-  transform: translateX(-100%);
-}
 
 .signin-transform,
 .signin {
@@ -655,182 +570,6 @@
   transform: translateX(20%);
 }
 
-.login-input-forgot {
-  color: black;
-  border: none;
-  padding: 12px 15px;
-  margin: 8px 0;
-  width: 90%;
-}
-
-.buttons-forg {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.forgot-password {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 400px;
-  width: 70%;
-  background-color: #ffafcc;
-  padding: 20px;
-  border: 2px solid #ffafcc;
-  border-radius: 25px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 9999;
-}
-
-.error-mail {
-  color: red;
-  font-size: 12px;
-}
-
-.link-zaboravljena {
-  font-size: 85%;
-  color: #ffffff;
-  font-style: italic;
-}
-
-.link-zaboravljena:hover {
-  cursor: pointer;
-}
-
-.error {
-  color: rgb(255, 255, 255);
-  font-size: 10px;
-}
-
-.parag-login {
-  display: flex;
-  flex-direction: column;
-  font-size: 90%;
-  font-weight: 100;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-}
-
-.form-login {
-  background: rgb(255, 200, 221);
-  background: radial-gradient(circle, rgba(255, 200, 221, 1) 0%, rgba(205, 180, 219, 1) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 50px;
-  height: 100%;
-  text-align: center;
-}
-
-.title {
-  font-size: larger;
-  font-weight: bold;
-  margin: 0;
-}
-
-.div-pozadina {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://img.freepik.com/free-photo/pastel-pink-vignette-concrete-textured-background_53876-129734.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
-
-.link-pocetna {
-  font-size: 100%;
-  color: #ffafcc;
-  font-weight: bold;
-}
-
-.login-input {
-  background-color: rgb(247, 247, 247);
-  color: black;
-  border: none;
-  padding: 12px 15px;
-  margin: 8px 0;
-  width: 100%;
-}
-
-.prijavljenPage {
-  display: flex;
-  background-image: url("https://static.vecteezy.com/system/resources/previews/000/696/278/original/textured-black-background-vector.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  width: 100%;
-  height: 100vh;
-}
-
-.prijavljen {
-  display: flex;
-  width: 50%;
-  margin: auto;
-  height: fit-content;
-  flex-direction: column;
-  padding: 10px;
-  align-items: center;
-  border: 4px solid white;
-  background-color: rgba(128, 128, 128, 0.12);
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5);
-}
-
-.App h1 {
-  text-align: center;
-}
-
-.NastaviKaoGost {
-  font-size: small;
-}
-
-
-@media screen and (max-width: 800px){
-  .desc-login-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-
-.info-section {
-  display: flex;
-  flex-direction: column;
- 
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px;
-
-}
-
-
-.info-section h1 {
-  font-size: 2.5em;
-  color: #4a4a4a;
-
-  margin-bottom: 10px;
-}
-
-.info-section h2 {
-  font-size: 1.8em;
-  color: #c487e8;
-  margin-bottom: 20px;
-}
-
-
-.info-section p {
-  font-size: 1.1em;
-  color: #333333;
-  line-height: 1.6;
-}
 
 .info-cards {
   display: flex;
@@ -839,56 +578,56 @@
   flex-wrap: nowrap;
   align-items: flex-start;
   transition: transform 0.5s ease;
-  transform: translateX(-100%); 
-  opacity: 0; 
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 .info-cards.show {
-  transform: translateX(0); 
-  opacity: 1; 
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .info-cards.hide {
-  transform: translateX(-100%); 
-  opacity: 0; 
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 .toggle-button {
-  margin: 15px 600px; 
-  padding: 5px 15px; 
-  font-size: 1em; 
-  background-color: #c487e8; 
-  color: white; 
-  border: none; 
-  border-radius: 6px; 
-  cursor: pointer; 
-  transition: background-color 0.3s; 
-  display: inline-flex; 
-  align-items: center; 
+  margin: 15px 600px;
+  padding: 5px 15px;
+  font-size: 1em;
+  background-color: #8b5e3c; /* warm saddle brown */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
 }
 
 .toggle-button:hover {
-  background-color: #a76bbf; 
+  background-color: #5c4033; /* darker brown on hover */
 }
-
 
 .toggle-button .icon {
-  margin-right: 5px; 
+  margin-right: 5px;
 }
 
+
 .contact-section {
-  background-color: #f4e5ff; 
+  background-color: #f3e5c2; /* soft beige background */
 }
 
 .contact-section h2 {
-  color: #000000; 
+  color: #4a2c18; /* rich dark brown */
   text-align: center;
 }
 
 .contact-section p {
   text-align: center;
+  color: #5c4033; /* medium brown for paragraph text */
 }
-
 
 .contact-form {
   display: flex;
@@ -896,52 +635,61 @@
   align-items: center;
 }
 
-
 .contact-input,
 .contact-textarea {
   width: 50%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #6a0dad;
+  border: 1px solid #8b5e3c; /* warm brown border */
   border-radius: 5px;
+  background-color: #fdf6ec; /* very light cream */
+  color: #4a2c18; /* input text in dark brown */
+  font-family: 'Poppins', sans-serif;
 }
 
 .contact-textarea {
-  height: 100px; 
+  height: 100px;
 }
 
-
 .contact-button {
-  background-color: #c846f0; 
+  background-color: #a67b5b; /* light to medium brown */
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
+.contact-button:hover {
+  background-color: #8b5e3c; /* darker brown on hover */
+}
+
+
 .footer {
-  background-color: #f4e5ff; 
-  color: #5a3f77; 
+  background-color: #e6d3b3; /* light beige */
+  color: #4a2c18; /* dark chocolate brown text */
   text-align: center;
   padding: 20px 10px;
   font-size: 0.95em;
-  border-top: 2px solid #e3c8f5;
+  border-top: 2px solid #c2a580; /* tan border for subtle separation */
   margin-top: 30px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .footer a {
-  color: #8c5fc0;
+  color: #8b5e3c; /* warm saddle brown for links */
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .footer a:hover {
   text-decoration: underline;
+  color: #5c4033; /* darker brown on hover */
 }
 
 .footer p {
   margin: 5px 0;
 }
+

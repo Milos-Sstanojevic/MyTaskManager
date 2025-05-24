@@ -203,7 +203,7 @@ const HomePage = () => {
             <p>Unde ideile tale strălucesc și sarcinile rămân organizate!✨ </p>
           </div>
           <div className="desc-box">
-            <p>📅 Planificați, urmăriți 👀 și colaborați fără efort. 🤝</p>
+            <p>📅 Planificați, urmăriți și colaborați fără efort. 🤝</p>
           </div>
           <div className="desc-box">
             <p>💡Transformă haosul în claritate și productivitatea într-o briză!💨🚀</p>

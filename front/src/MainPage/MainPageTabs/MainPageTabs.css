@@ -1,99 +1,101 @@
 /* Main container for the whole tab component */
 .container-tabs {
     width: 100%;
-    background-color: #ffeff6; /* Soft pink background */
+    background-color: #fdf6ec; /* Soft cream */
     padding: 20px;
-    border-radius: 12px; /* Rounded corners for the container */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(101, 67, 33, 0.1); /* Warm brown shadow */
 }
 
 /* Tab navigation styles */
 .bloc-tabs {
     display: flex;
     position: relative;
-    margin-bottom: 20px; /* Spacing below tabs */
+    margin-bottom: 20px;
 }
 
 .tabs {
     padding: 12px 25px;
-    border: 2px solid #ff7eb3; /* Darker pink for tab borders */
+    border: 2px solid #a67b5b; /* Medium brown */
     border-radius: 10px;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s, color 0.3s;
-    font-weight: bold; /* Enhanced font weight for emphasis */
-    color: #5a5a5a; /* Darker text color */
-    margin-right: 10px; /* Space between tabs */
+    font-weight: bold;
+    color: #5a5a5a;
+    margin-right: 10px;
 }
 
 .tabs:hover {
-    background: #ffb3d9; /* Hover color */
+    background: #e6d3b3; /* Hover cream */
     transform: scale(1.05);
-    color: #333; /* Dark text on hover */
+    color: #3e2a1a;
 }
 
 .active-tabs {
-    background: #ffadd6; /* Active tab background */
-    border-bottom: none; /* Remove border at bottom for visual effect */
+    background: #d9c2a3; /* Active tab background */
+    border-bottom: none;
     position: relative;
     top: 2px;
 }
 
-/* Adding a separate styles for dropdowns */
+/* Dropdown styles */
 .filter-dropdown {
-    margin-bottom: 20px; /* Spacing below the dropdown */
+    margin-bottom: 20px;
 }
 
 .filter-dropdown label {
-    font-weight: bold; /* Emphasis on label */
+    font-weight: bold;
 }
 
 select {
-    border: 2px solid #ff7eb3; /* Pink border for select */
-    border-radius: 6px; /* Rounded corners */
+    border: 2px solid #a67b5b;
+    border-radius: 6px;
     padding: 8px;
-    font-size: 16px; /* Font size */
-    transition: background 0.3s; /* Smooth background change on interaction */
+    font-size: 16px;
+    background: #fffaf3;
+    color: #4a2c18;
+    transition: background 0.3s;
 }
 
 select:hover {
-    background: #ffe6f0; /* Light pink on hover */
+    background: #f4e8db;
 }
 
-/* Board styles */
+/* Boards container */
 .boards {
     display: flex;
-    flex-direction: column; /* Stacking boards on top of each other */
-    border: 2px solid #ffb3d9; /* Light border for boards */
+    flex-direction: column;
+    border: 2px solid #e4d3bd;
     padding: 20px;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
     margin-top: 10px;
 }
 
-/* Styles for individual task boards */
+/* Individual board hidden/shown */
 .board {
-    display: none; /* Initially hidden */
+    display: none;
 }
 
 .active-board {
     display: flex;
-    flex-wrap: wrap; /* Allow cards to wrap */
-    gap: 20px; /* Spacing between cards */
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 /* Card styles */
 .card {
-    background: white; /* White background for cards */
-    border: 2px solid #ff7eb3; /* Pink border for cards */
-    border-radius: 10px; /* Rounded corners */
+    background: white;
+    border: 2px solid #a67b5b;
+    border-radius: 10px;
     padding: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.2s; /* Smooth hover effect */
-    min-width: 120px; /* Minimum width for cards */
-    flex: 1 1 100px; /* Allow flexibility */
+    box-shadow: 0 2px 10px rgba(101, 67, 33, 0.1);
+    transition: transform 0.2s;
+    min-width: 120px;
+    flex: 1 1 100px;
 }
 
 .card:hover {
-    transform: translateY(-3px); /* Lift effect on hover */
+    transform: translateY(-3px);
 }
 
 /* Add Task Card styles */
@@ -101,23 +103,23 @@ select:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f0f0f0; /* Light gray for the Add Task card */
-    border: 2px dashed #ff7eb3; /* Dashed border */
-    border-radius: 10px; /* Rounded corners */
-    height: 150px; /* Fixed height */
+    background: #f7f1e8;
+    border: 2px dashed #a67b5b;
+    border-radius: 10px;
+    height: 150px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s; /* Add transform */
+    transition: background 0.3s, transform 0.3s;
 }
 
 .add-task-card:hover {
-    background: #ffe6f0; /* Light pink on hover */
-    transform: scale(1.02); /* Slightly scaling effect */
+    background: #efe2d0;
+    transform: scale(1.02);
 }
 
-/* New Button for add task with better visibility */
+/* Add Task Button styles */
 .add-task-button {
     padding: 10px 20px;
-    background-color: #ff7eb3;
+    background-color: #8b5e3c;
     color: white;
     border: none;
     border-radius: 8px;
@@ -127,5 +129,5 @@ select:hover {
 }
 
 .add-task-button:hover {
-    background: #ff9ecc; /* Darker pink on hover */
+    background: #5c4033;
 }

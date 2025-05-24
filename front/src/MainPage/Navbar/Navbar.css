@@ -3,8 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #f5dfbb;
-  color: #333;
+  background-color: #f6e9d4; /* soft beige */
+  color: #4a2c18; /* dark brown */
   font-family: 'Arial', sans-serif;
 }
 
@@ -22,6 +22,7 @@
 .brand-name {
   font-size: 24px;
   font-weight: bold;
+  color: #5c4033;
 }
 
 .nav-links {
@@ -31,12 +32,13 @@
 
 .nav-item {
   cursor: pointer;
-  padding: 8px 12px; 
-  transition: background 0.3s, color 0.3s; 
+  padding: 8px 12px;
+  color: #4a2c18;
+  transition: background 0.3s, color 0.3s;
+  border-radius: 5px;
 }
 
 .nav-item:hover {
-  background-color: #ffe6a7;
-  color: #333;
-  border-radius: 5px;
+  background-color: #e6d3b3; /* soft brown hover */
+  color: #3e2a1a;
 }

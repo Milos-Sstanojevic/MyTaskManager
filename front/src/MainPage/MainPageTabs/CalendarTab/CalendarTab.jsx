@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import enUS from "date-fns/locale/en-US";
@@ -7,6 +7,7 @@ import enUS from "date-fns/locale/en-US";
 const locales = {
   "en-US": enUS,
 };
+
 const localizer = dateFnsLocalizer({
   format,
   parse,
@@ -17,6 +18,8 @@ const localizer = dateFnsLocalizer({
 
 const CalendarTab = ({ tasks }) => {
   const [events, setEvents] = useState([]);
+  const [date, setDate] = useState(new Date());
+  const [view, setView] = useState(Views.MONTH);
 
   useEffect(() => {
     const transformedEvents = tasks.map((task, index) => ({
@@ -56,6 +59,10 @@ const CalendarTab = ({ tasks }) => {
         endAccessor="end"
         style={{ width: "100%", height: "100%" }}
         eventPropGetter={eventStyleGetter}
+        date={date}
+        view={view}
+        onNavigate={(newDate) => setDate(newDate)}
+        onView={(newView) => setView(newView)}
       />
     </div>
   );
